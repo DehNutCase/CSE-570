@@ -1,0 +1,53 @@
+Script started on Mon 18 May 2020 10:27:27 AM PDT
+]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Lab2[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Lab2[00m$ P[Kpython3 lab2.py
+For file = "g417":
+Printing firsts:
+D:
++e
+U:
+*e
+F:
+xy(z
+I:
+yzx
+E:
+xyz(
+T:
+zy(x
+
+Printing follows:
+D:
+)$
+U:
++$)
+F:
+*$)+
+I:
+*$+)
+E:
+)$
+T:
++$)
+For file = "g419":
+Printing firsts:
+E:
+(i
+T:
+(i
+S:
+(i
+F:
+(i
+
+Printing follows:
+E:
++$)
+T:
++*$)
+S:
+$
+F:
+*$)+
+]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Lab2[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Lab2[00m$ exit
+
+Script done on Mon 18 May 2020 10:27:34 AM PDT

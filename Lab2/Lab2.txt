@@ -1,53 +1,107 @@
-Script started on Mon 18 May 2020 10:27:27 AM PDT
-]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Lab2[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Lab2[00m$ P[Kpython3 lab2.py
+Script started on Tue 26 May 2020 06:42:19 PM PDT
+]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Lab2[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Lab2[00m$ python lab2.py
+The program 'python' can be found in the following packages:
+ * python-minimal
+ * python3
+Try: sudo apt install <selected package>
+]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Lab2[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Lab2[00m$ ^C
+]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Lab2[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Lab2[00m$ script lab2.txt
+Script started, file is lab2.txt
+]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Lab2[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Lab2[00m$ python3 lab2.py
 For file = "g417":
+Printing Productions:
+D:
++TD
+e
+
+E:
+TD
+
+F:
+(E)
+I
+
+I:
+x
+y
+z
+
+T:
+FU
+
+U:
+*FU
+e
+
 Printing firsts:
 D:
 +e
+E:
+(xyz
+F:
+(xyz
+I:
+xyz
+T:
+(xyz
 U:
 *e
-F:
-xy(z
-I:
-yzx
-E:
-xyz(
-T:
-zy(x
 
 Printing follows:
 D:
-)$
-U:
-+$)
-F:
-*$)+
-I:
-*$+)
+$)
 E:
-)$
+$)
+F:
+$)*+
+I:
+$)*+
 T:
-+$)
+$)+
+U:
+$)+
+
+
 For file = "g419":
+Printing Productions:
+E:
+E+T
+T
+
+F:
+(E)
+i
+
+S:
+E
+
+T:
+F
+T*F
+
 Printing firsts:
 E:
 (i
-T:
+F:
 (i
 S:
 (i
-F:
+T:
 (i
 
 Printing follows:
 E:
-+$)
-T:
-+*$)
+$)+
+F:
+$)*+
 S:
 $
-F:
-*$)+
+T:
+$)*+
+]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Lab2[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Lab2[00m$ ^C
+]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Lab2[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Lab2[00m$ exit
+Script done, file is lab2.txt
+]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Lab2[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Lab2[00m$ ^C
 ]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Lab2[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Lab2[00m$ exit
 
-Script done on Mon 18 May 2020 10:27:34 AM PDT
+Script done on Tue 26 May 2020 06:43:47 PM PDT

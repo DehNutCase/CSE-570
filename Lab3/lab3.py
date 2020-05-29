@@ -212,6 +212,15 @@ file = open('g419', 'r')
 grammar, start = read_grammar_file(file)
 
 print('For file = "g419":')
+print('Printing Productions:')
+for i in sorted(grammar):
+  if i == 'terminals':
+    continue
+  print(i + ':')
+  for j in sorted(grammar[i]):
+    print(j)
+  print('')
+
 print("Printing kernels of the canonical states of the grammar:")
 temp = canonical(grammar,start)
 #canonical returns a dictionary that uses the kernels of states as keys
@@ -261,6 +270,16 @@ file = open('g417', 'r')
 grammar, start = read_grammar_file(file)
 
 print('For file = "g417":')
+print('Printing Productions:')
+for i in sorted(grammar):
+  if i == 'terminals':
+    continue
+  print(i + ':')
+  for j in sorted(grammar[i]):
+    print(j)
+  print('')
+  
+  
 print("Printing kernels of the canonical states of the grammar:")
 temp = canonical(grammar,start)
 print("")

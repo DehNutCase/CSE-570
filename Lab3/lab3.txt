@@ -1,0 +1,164 @@
+Script started on Thu 28 May 2020 10:43:58 PM PDT
+]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Lab3[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Lab3[00m$ python3 lab3.py
+For file = "g419":
+Printing kernels of the canonical states of the grammar:
+
+Format of a state is: [{dictionary of non_terminals: dictionary of productions}, symbol}]
+i.e. a state of the form [{'S': {'.A': true}}, '('] has the production S -> .A, and is reached
+by calling goto(I, '(')
+Note that the added state "S'" isn't produced by goto, hence it doesn't have a symbol
+
+State # 0  is
+[{"S'": {".S": true}}]
+State # 1  is
+[{"E": {"T.": true}, "T": {"T.*F": true}}, "T"]
+State # 2  is
+[{"F": {"(.E)": true}}, "("]
+State # 3  is
+[{"S'": {"S.": true}}, "S"]
+State # 4  is
+[{"E": {"E.+T": true}, "S": {"E.": true}}, "E"]
+State # 5  is
+[{"T": {"F.": true}}, "F"]
+State # 6  is
+[{"F": {"i.": true}}, "i"]
+State # 7  is
+[{"F": {"(E.)": true}, "E": {"E.+T": true}}, "E"]
+State # 8  is
+[{"T": {"T*.F": true}}, "*"]
+State # 9  is
+[{"E": {"E+.T": true}}, "+"]
+State # 10  is
+[{"F": {"(E).": true}}, ")"]
+State # 11  is
+[{"E": {"E+T.": true}, "T": {"T.*F": true}}, "T"]
+State # 12  is
+[{"T": {"T*F.": true}}, "F"]
+
+Printing the canonical states of the grammar:
+Obtained by calling closure(I) on the kernel of a state
+State # 0  is
+{"S'": {'.S': True}} {'E': {'E+T': True, 'T': True}, 'F': {'(E)': True, 'i': True}, 'terminals': {'*': True, '+': True, 'i': True, '(': True, ')': True}, 'S': {'E': True}, 'T': {'F': True, 'T*F': True}}
+State # 1  is
+{'E': {'T.': True}, 'T': {'T.*F': True}} {'E': {'E+T': True, 'T': True}, 'F': {'(E)': True, 'i': True}, 'terminals': {'*': True, '+': True, 'i': True, '(': True, ')': True}, 'S': {'E': True}, 'T': {'F': True, 'T*F': True}}
+State # 2  is
+{'F': {'(.E)': True}} {'E': {'E+T': True, 'T': True}, 'F': {'(E)': True, 'i': True}, 'terminals': {'*': True, '+': True, 'i': True, '(': True, ')': True}, 'S': {'E': True}, 'T': {'F': True, 'T*F': True}}
+State # 3  is
+{"S'": {'S.': True}} {'E': {'E+T': True, 'T': True}, 'F': {'(E)': True, 'i': True}, 'terminals': {'*': True, '+': True, 'i': True, '(': True, ')': True}, 'S': {'E': True}, 'T': {'F': True, 'T*F': True}}
+State # 4  is
+{'E': {'E.+T': True}, 'S': {'E.': True}} {'E': {'E+T': True, 'T': True}, 'F': {'(E)': True, 'i': True}, 'terminals': {'*': True, '+': True, 'i': True, '(': True, ')': True}, 'S': {'E': True}, 'T': {'F': True, 'T*F': True}}
+State # 5  is
+{'T': {'F.': True}} {'E': {'E+T': True, 'T': True}, 'F': {'(E)': True, 'i': True}, 'terminals': {'*': True, '+': True, 'i': True, '(': True, ')': True}, 'S': {'E': True}, 'T': {'F': True, 'T*F': True}}
+State # 6  is
+{'F': {'i.': True}} {'E': {'E+T': True, 'T': True}, 'F': {'(E)': True, 'i': True}, 'terminals': {'*': True, '+': True, 'i': True, '(': True, ')': True}, 'S': {'E': True}, 'T': {'F': True, 'T*F': True}}
+State # 7  is
+{'F': {'(E.)': True}, 'E': {'E.+T': True}} {'E': {'E+T': True, 'T': True}, 'F': {'(E)': True, 'i': True}, 'terminals': {'*': True, '+': True, 'i': True, '(': True, ')': True}, 'S': {'E': True}, 'T': {'F': True, 'T*F': True}}
+State # 8  is
+{'T': {'T*.F': True}} {'E': {'E+T': True, 'T': True}, 'F': {'(E)': True, 'i': True}, 'terminals': {'*': True, '+': True, 'i': True, '(': True, ')': True}, 'S': {'E': True}, 'T': {'F': True, 'T*F': True}}
+State # 9  is
+{'E': {'E+.T': True}} {'E': {'E+T': True, 'T': True}, 'F': {'(E)': True, 'i': True}, 'terminals': {'*': True, '+': True, 'i': True, '(': True, ')': True}, 'S': {'E': True}, 'T': {'F': True, 'T*F': True}}
+State # 10  is
+{'F': {'(E).': True}} {'E': {'E+T': True, 'T': True}, 'F': {'(E)': True, 'i': True}, 'terminals': {'*': True, '+': True, 'i': True, '(': True, ')': True}, 'S': {'E': True}, 'T': {'F': True, 'T*F': True}}
+State # 11  is
+{'E': {'E+T.': True}, 'T': {'T.*F': True}} {'E': {'E+T': True, 'T': True}, 'F': {'(E)': True, 'i': True}, 'terminals': {'*': True, '+': True, 'i': True, '(': True, ')': True}, 'S': {'E': True}, 'T': {'F': True, 'T*F': True}}
+State # 12  is
+{'T': {'T*F.': True}} {'E': {'E+T': True, 'T': True}, 'F': {'(E)': True, 'i': True}, 'terminals': {'*': True, '+': True, 'i': True, '(': True, ')': True}, 'S': {'E': True}, 'T': {'F': True, 'T*F': True}}
+
+For file = "g417":
+Printing kernels of the canonical states of the grammar:
+
+Format of a state is: [{dictionary of non_terminals: dictionary of productions}, symbol}]
+i.e. a state of the form [{'S': {'.A': true}}, '('] has the production S -> .A, and is reached
+by calling goto(I, '(')
+Note that the added state "S'" isn't produced by goto, hence it doesn't have a symbol
+
+State # 0  is
+[{"S'": {".E": true}}]
+State # 1  is
+[{"I": {"x.": true}}, "x"]
+State # 2  is
+[{"S'": {"E.": true}}, "E"]
+State # 3  is
+[{"F": {"(.E)": true}}, "("]
+State # 4  is
+[{"F": {"I.": true}}, "I"]
+State # 5  is
+[{"T": {"F.U": true}}, "F"]
+State # 6  is
+[{"I": {"z.": true}}, "z"]
+State # 7  is
+[{"E": {"T.D": true}}, "T"]
+State # 8  is
+[{"I": {"y.": true}}, "y"]
+State # 9  is
+[{"U": {"*.FU": true}}, "*"]
+State # 10  is
+[{"T": {"FU.": true}}, "U"]
+State # 11  is
+[{"U": {"e.": true}}, "e"]
+State # 12  is
+[{"D": {"e.": true}}, "e"]
+State # 13  is
+[{"D": {"+.TD": true}}, "+"]
+State # 14  is
+[{"E": {"TD.": true}}, "D"]
+State # 15  is
+[{"F": {"(E.)": true}}, "E"]
+State # 16  is
+[{"U": {"*F.U": true}}, "F"]
+State # 17  is
+[{"F": {"(E).": true}}, ")"]
+State # 18  is
+[{"D": {"+T.D": true}}, "T"]
+State # 19  is
+[{"D": {"+TD.": true}}, "D"]
+State # 20  is
+[{"U": {"*FU.": true}}, "U"]
+
+Printing the canonical states of the grammar:
+Obtained by calling closure(I) on the kernel of a state
+State # 0  is
+{"S'": {'.E': True}} {'E': {'TD': True}, 'F': {'(E)': True, 'I': True}, 'terminals': {'*': True, '+': True, 'z': True, ')': True, '(': True, 'y': True, 'x': True}, 'D': {'+TD': True, 'e': True}, 'I': {'z': True, 'y': True, 'x': True}, 'U': {'*FU': True, 'e': True}, 'T': {'FU': True}}
+State # 1  is
+{'I': {'x.': True}} {'E': {'TD': True}, 'F': {'(E)': True, 'I': True}, 'terminals': {'*': True, '+': True, 'z': True, ')': True, '(': True, 'y': True, 'x': True}, 'D': {'+TD': True, 'e': True}, 'I': {'z': True, 'y': True, 'x': True}, 'U': {'*FU': True, 'e': True}, 'T': {'FU': True}}
+State # 2  is
+{"S'": {'E.': True}} {'E': {'TD': True}, 'F': {'(E)': True, 'I': True}, 'terminals': {'*': True, '+': True, 'z': True, ')': True, '(': True, 'y': True, 'x': True}, 'D': {'+TD': True, 'e': True}, 'I': {'z': True, 'y': True, 'x': True}, 'U': {'*FU': True, 'e': True}, 'T': {'FU': True}}
+State # 3  is
+{'F': {'(.E)': True}} {'E': {'TD': True}, 'F': {'(E)': True, 'I': True}, 'terminals': {'*': True, '+': True, 'z': True, ')': True, '(': True, 'y': True, 'x': True}, 'D': {'+TD': True, 'e': True}, 'I': {'z': True, 'y': True, 'x': True}, 'U': {'*FU': True, 'e': True}, 'T': {'FU': True}}
+State # 4  is
+{'F': {'I.': True}} {'E': {'TD': True}, 'F': {'(E)': True, 'I': True}, 'terminals': {'*': True, '+': True, 'z': True, ')': True, '(': True, 'y': True, 'x': True}, 'D': {'+TD': True, 'e': True}, 'I': {'z': True, 'y': True, 'x': True}, 'U': {'*FU': True, 'e': True}, 'T': {'FU': True}}
+State # 5  is
+{'T': {'F.U': True}} {'E': {'TD': True}, 'F': {'(E)': True, 'I': True}, 'terminals': {'*': True, '+': True, 'z': True, ')': True, '(': True, 'y': True, 'x': True}, 'D': {'+TD': True, 'e': True}, 'I': {'z': True, 'y': True, 'x': True}, 'U': {'*FU': True, 'e': True}, 'T': {'FU': True}}
+State # 6  is
+{'I': {'z.': True}} {'E': {'TD': True}, 'F': {'(E)': True, 'I': True}, 'terminals': {'*': True, '+': True, 'z': True, ')': True, '(': True, 'y': True, 'x': True}, 'D': {'+TD': True, 'e': True}, 'I': {'z': True, 'y': True, 'x': True}, 'U': {'*FU': True, 'e': True}, 'T': {'FU': True}}
+State # 7  is
+{'E': {'T.D': True}} {'E': {'TD': True}, 'F': {'(E)': True, 'I': True}, 'terminals': {'*': True, '+': True, 'z': True, ')': True, '(': True, 'y': True, 'x': True}, 'D': {'+TD': True, 'e': True}, 'I': {'z': True, 'y': True, 'x': True}, 'U': {'*FU': True, 'e': True}, 'T': {'FU': True}}
+State # 8  is
+{'I': {'y.': True}} {'E': {'TD': True}, 'F': {'(E)': True, 'I': True}, 'terminals': {'*': True, '+': True, 'z': True, ')': True, '(': True, 'y': True, 'x': True}, 'D': {'+TD': True, 'e': True}, 'I': {'z': True, 'y': True, 'x': True}, 'U': {'*FU': True, 'e': True}, 'T': {'FU': True}}
+State # 9  is
+{'U': {'*.FU': True}} {'E': {'TD': True}, 'F': {'(E)': True, 'I': True}, 'terminals': {'*': True, '+': True, 'z': True, ')': True, '(': True, 'y': True, 'x': True}, 'D': {'+TD': True, 'e': True}, 'I': {'z': True, 'y': True, 'x': True}, 'U': {'*FU': True, 'e': True}, 'T': {'FU': True}}
+State # 10  is
+{'T': {'FU.': True}} {'E': {'TD': True}, 'F': {'(E)': True, 'I': True}, 'terminals': {'*': True, '+': True, 'z': True, ')': True, '(': True, 'y': True, 'x': True}, 'D': {'+TD': True, 'e': True}, 'I': {'z': True, 'y': True, 'x': True}, 'U': {'*FU': True, 'e': True}, 'T': {'FU': True}}
+State # 11  is
+{'U': {'e.': True}} {'E': {'TD': True}, 'F': {'(E)': True, 'I': True}, 'terminals': {'*': True, '+': True, 'z': True, ')': True, '(': True, 'y': True, 'x': True}, 'D': {'+TD': True, 'e': True}, 'I': {'z': True, 'y': True, 'x': True}, 'U': {'*FU': True, 'e': True}, 'T': {'FU': True}}
+State # 12  is
+{'D': {'e.': True}} {'E': {'TD': True}, 'F': {'(E)': True, 'I': True}, 'terminals': {'*': True, '+': True, 'z': True, ')': True, '(': True, 'y': True, 'x': True}, 'D': {'+TD': True, 'e': True}, 'I': {'z': True, 'y': True, 'x': True}, 'U': {'*FU': True, 'e': True}, 'T': {'FU': True}}
+State # 13  is
+{'D': {'+.TD': True}} {'E': {'TD': True}, 'F': {'(E)': True, 'I': True}, 'terminals': {'*': True, '+': True, 'z': True, ')': True, '(': True, 'y': True, 'x': True}, 'D': {'+TD': True, 'e': True}, 'I': {'z': True, 'y': True, 'x': True}, 'U': {'*FU': True, 'e': True}, 'T': {'FU': True}}
+State # 14  is
+{'E': {'TD.': True}} {'E': {'TD': True}, 'F': {'(E)': True, 'I': True}, 'terminals': {'*': True, '+': True, 'z': True, ')': True, '(': True, 'y': True, 'x': True}, 'D': {'+TD': True, 'e': True}, 'I': {'z': True, 'y': True, 'x': True}, 'U': {'*FU': True, 'e': True}, 'T': {'FU': True}}
+State # 15  is
+{'F': {'(E.)': True}} {'E': {'TD': True}, 'F': {'(E)': True, 'I': True}, 'terminals': {'*': True, '+': True, 'z': True, ')': True, '(': True, 'y': True, 'x': True}, 'D': {'+TD': True, 'e': True}, 'I': {'z': True, 'y': True, 'x': True}, 'U': {'*FU': True, 'e': True}, 'T': {'FU': True}}
+State # 16  is
+{'U': {'*F.U': True}} {'E': {'TD': True}, 'F': {'(E)': True, 'I': True}, 'terminals': {'*': True, '+': True, 'z': True, ')': True, '(': True, 'y': True, 'x': True}, 'D': {'+TD': True, 'e': True}, 'I': {'z': True, 'y': True, 'x': True}, 'U': {'*FU': True, 'e': True}, 'T': {'FU': True}}
+State # 17  is
+{'F': {'(E).': True}} {'E': {'TD': True}, 'F': {'(E)': True, 'I': True}, 'terminals': {'*': True, '+': True, 'z': True, ')': True, '(': True, 'y': True, 'x': True}, 'D': {'+TD': True, 'e': True}, 'I': {'z': True, 'y': True, 'x': True}, 'U': {'*FU': True, 'e': True}, 'T': {'FU': True}}
+State # 18  is
+{'D': {'+T.D': True}} {'E': {'TD': True}, 'F': {'(E)': True, 'I': True}, 'terminals': {'*': True, '+': True, 'z': True, ')': True, '(': True, 'y': True, 'x': True}, 'D': {'+TD': True, 'e': True}, 'I': {'z': True, 'y': True, 'x': True}, 'U': {'*FU': True, 'e': True}, 'T': {'FU': True}}
+State # 19  is
+{'D': {'+TD.': True}} {'E': {'TD': True}, 'F': {'(E)': True, 'I': True}, 'terminals': {'*': True, '+': True, 'z': True, ')': True, '(': True, 'y': True, 'x': True}, 'D': {'+TD': True, 'e': True}, 'I': {'z': True, 'y': True, 'x': True}, 'U': {'*FU': True, 'e': True}, 'T': {'FU': True}}
+State # 20  is
+{'U': {'*FU.': True}} {'E': {'TD': True}, 'F': {'(E)': True, 'I': True}, 'terminals': {'*': True, '+': True, 'z': True, ')': True, '(': True, 'y': True, 'x': True}, 'D': {'+TD': True, 'e': True}, 'I': {'z': True, 'y': True, 'x': True}, 'U': {'*FU': True, 'e': True}, 'T': {'FU': True}}
+]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Lab3[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Lab3[00m$ exit
+
+Script done on Thu 28 May 2020 10:44:07 PM PDT

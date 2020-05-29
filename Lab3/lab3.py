@@ -260,15 +260,15 @@ print("Obtained by calling closure(I) on the kernel of a state")
 
 for i in to_print:
   print("State #", i[1], " is")
-  state = json.loads(i[0])[0] #unpacking the state dictionary from JSON
-  print(state, grammar)
+  state_list = json.loads(i[0]) #unpacking the state dictionary from JSON
+  if i[1] != 0:
+    print("Obtained by goto(I, ", state_list[1], ")")
+  print(closure(state_list[0], grammar))
 
 print("")
 
 
 file = open('g417', 'r')
-grammar, start = read_grammar_file(file)
-
 print('For file = "g417":')
 print('Printing Productions:')
 for i in sorted(grammar):
@@ -278,15 +278,21 @@ for i in sorted(grammar):
   for j in sorted(grammar[i]):
     print(j)
   print('')
-  
-  
+
 print("Printing kernels of the canonical states of the grammar:")
 temp = canonical(grammar,start)
+#canonical returns a dictionary that uses the kernels of states as keys
+#and state id as values
+#additionally, each state is in the form [json.dumps(state), symbol]
+#and the symbol is the symbol used in goto to reach that state
+#call closure on states to obtain the full state
+#because state is in json form, we need to call json.loads(state)
 print("")
 to_print = []
 
 for i in temp:
   to_print.append([i, temp[i]])
+
 to_print.sort(key=second_entry)
 
 print("Format of a state is: [{dictionary of non_terminals: dictionary of productions}, symbol}]")
@@ -296,6 +302,10 @@ print("Note that the added state \"S'\" isn't produced by goto, hence it doesn't
 print("")
 
 for i in to_print:
+  #each i is a state
+  #the first item in each i is a dictionary with keys being non_terminals
+  #and values being dictionaries containing productions as keys
+  #the second item in i is the numeric state id of the state
   print("State #", i[1], " is")
   print(i[0])
   
@@ -306,8 +316,9 @@ print("Obtained by calling closure(I) on the kernel of a state")
 
 for i in to_print:
   print("State #", i[1], " is")
-  state = json.loads(i[0])[0]
-  print(state, grammar)
+  state_list = json.loads(i[0]) #unpacking the state dictionary from JSON
+  if i[1] != 0:
+    print("Obtained by goto(I, ", state_list[1], ")")
+  print(closure(state_list[0], grammar))
 
-  
-  
+print("")

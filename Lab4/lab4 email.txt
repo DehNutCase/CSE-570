@@ -96,17 +96,9 @@ A -> .e
 
 
 Grammar g41, which is the 1st grammar, Strings of 0's and 1's with unequal numbers of 0's and 1's., is not LR(0). First, there are null productions in this grammar
-meaning the parse wouldn't be able to tell whether to reduce e to a state or to shift over to the next temrinal.
-Second, there are shfit reduce conflicts in the grammar, example is state 2:
+meaning the parse wouldn't be able to tell whether to reduce e to a state or to shift over to the next terminal.
 
-State # 2  is
-Obtained by goto(I,  A )
-{'C': {'A.1A': True, 'A.1C': True}, 'B': {'A.0A': True, 'A.0B': True}, 'A': {'A.A': True, '.1A0': True, '.e': True, '.AA': True, '.0A1': True}}
-
-State 2 has the problematic productions:
-A -> A.A
-A -> .AA
-This is a shift reduce conflict. (Do we move the period over the A or reduce .AA to A immediately?)
+However, if null productions are resolved there doesn't seem to be any other conflicts.
 
 Grammar 2: Strings of 0's and 1's that are palindromes
 

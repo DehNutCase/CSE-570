@@ -146,11 +146,10 @@ def canonical(grammar, start):
   
   #initial = closure({"S'": {"." + start: True}}, grammar)
   initial = {"S'": {"." + start: True}}
-  states = {json.dumps([initial]): True}
+  states = {json.dumps([initial, "S'"]): True}
   #states contains keys of the form json.dumps([item, symbol])
   #to retrieve the item we need to call json.loads(key), and take the 0th index
-  #note that the initial state doesn't have a symbol associated with it
-  #the symbol is retrieved by taking the 1st index
+  #The initial state should have the modified start symbol S' associated with it
   
   
   prev = {}
@@ -261,14 +260,14 @@ print("Obtained by calling closure(I) on the kernel of a state")
 for i in to_print:
   print("State #", i[1], " is")
   state_list = json.loads(i[0]) #unpacking the state dictionary from JSON
-  if i[1] != 0:
-    print("Obtained by goto(I, ", state_list[1], ")")
+  print("Obtained by goto(I, ", state_list[1], ")")
   print(closure(state_list[0], grammar))
 
 print("")
 
 
 file = open('g417', 'r')
+grammar, start = read_grammar_file(file)
 print('For file = "g417":')
 print('Printing Productions:')
 for i in sorted(grammar):
@@ -317,8 +316,7 @@ print("Obtained by calling closure(I) on the kernel of a state")
 for i in to_print:
   print("State #", i[1], " is")
   state_list = json.loads(i[0]) #unpacking the state dictionary from JSON
-  if i[1] != 0:
-    print("Obtained by goto(I, ", state_list[1], ")")
+  print("Obtained by goto(I, ", state_list[1], ")")
   print(closure(state_list[0], grammar))
 
 print("")

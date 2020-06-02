@@ -1,4 +1,4 @@
-Script started on Thu 28 May 2020 11:17:19 PM PDT
+Script started on Mon 01 Jun 2020 07:10:55 PM PDT
 ]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Lab3[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Lab3[00m$ python3 lab3.py
 For file = "g419":
 Printing Productions:
@@ -25,19 +25,19 @@ by calling goto(I, '(')
 Note that the added state "S'" isn't produced by goto, hence it doesn't have a symbol
 
 State # 0  is
-[{"S'": {".S": true}}]
+[{"S'": {".S": true}}, "S'"]
 State # 1  is
-[{"S'": {"S.": true}}, "S"]
+[{"E": {"E.+T": true}, "S": {"E.": true}}, "E"]
 State # 2  is
-[{"F": {"i.": true}}, "i"]
-State # 3  is
-[{"S": {"E.": true}, "E": {"E.+T": true}}, "E"]
-State # 4  is
-[{"T": {"T.*F": true}, "E": {"T.": true}}, "T"]
-State # 5  is
-[{"T": {"F.": true}}, "F"]
-State # 6  is
 [{"F": {"(.E)": true}}, "("]
+State # 3  is
+[{"F": {"i.": true}}, "i"]
+State # 4  is
+[{"E": {"T.": true}, "T": {"T.*F": true}}, "T"]
+State # 5  is
+[{"S'": {"S.": true}}, "S"]
+State # 6  is
+[{"T": {"F.": true}}, "F"]
 State # 7  is
 [{"E": {"E.+T": true}, "F": {"(E.)": true}}, "E"]
 State # 8  is
@@ -45,34 +45,35 @@ State # 8  is
 State # 9  is
 [{"E": {"E+.T": true}}, "+"]
 State # 10  is
-[{"T": {"T*F.": true}}, "F"]
+[{"E": {"E+T.": true}, "T": {"T.*F": true}}, "T"]
 State # 11  is
-[{"T": {"T.*F": true}, "E": {"E+T.": true}}, "T"]
-State # 12  is
 [{"F": {"(E).": true}}, ")"]
+State # 12  is
+[{"T": {"T*F.": true}}, "F"]
 
 Printing the canonical states of the grammar:
 Obtained by calling closure(I) on the kernel of a state
 State # 0  is
-{'S': {'.E': True}, 'T': {'.T*F': True, '.F': True}, 'E': {'.T': True, '.E+T': True}, "S'": {'.S': True}, 'F': {'.i': True, '.(E)': True}}
+Obtained by goto(I,  S' )
+{"S'": {'.S': True}, 'E': {'.T': True, '.E+T': True}, 'T': {'.T*F': True, '.F': True}, 'S': {'.E': True}, 'F': {'.i': True, '.(E)': True}}
 State # 1  is
-Obtained by goto(I,  S )
-{"S'": {'S.': True}}
+Obtained by goto(I,  E )
+{'E': {'E.+T': True}, 'S': {'E.': True}}
 State # 2  is
+Obtained by goto(I,  ( )
+{'E': {'.T': True, '.E+T': True}, 'T': {'.T*F': True, '.F': True}, 'F': {'.i': True, '.(E)': True, '(.E)': True}}
+State # 3  is
 Obtained by goto(I,  i )
 {'F': {'i.': True}}
-State # 3  is
-Obtained by goto(I,  E )
-{'S': {'E.': True}, 'E': {'E.+T': True}}
 State # 4  is
 Obtained by goto(I,  T )
-{'T': {'T.*F': True}, 'E': {'T.': True}}
+{'E': {'T.': True}, 'T': {'T.*F': True}}
 State # 5  is
+Obtained by goto(I,  S )
+{"S'": {'S.': True}}
+State # 6  is
 Obtained by goto(I,  F )
 {'T': {'F.': True}}
-State # 6  is
-Obtained by goto(I,  ( )
-{'T': {'.T*F': True, '.F': True}, 'E': {'.T': True, '.E+T': True}, 'F': {'.i': True, '(.E)': True, '.(E)': True}}
 State # 7  is
 Obtained by goto(I,  E )
 {'E': {'E.+T': True}, 'F': {'(E.)': True}}
@@ -81,33 +82,41 @@ Obtained by goto(I,  * )
 {'T': {'T*.F': True}, 'F': {'.i': True, '.(E)': True}}
 State # 9  is
 Obtained by goto(I,  + )
-{'T': {'.T*F': True, '.F': True}, 'E': {'E+.T': True}, 'F': {'.i': True, '.(E)': True}}
+{'E': {'E+.T': True}, 'T': {'.T*F': True, '.F': True}, 'F': {'.i': True, '.(E)': True}}
 State # 10  is
-Obtained by goto(I,  F )
-{'T': {'T*F.': True}}
-State # 11  is
 Obtained by goto(I,  T )
-{'T': {'T.*F': True}, 'E': {'E+T.': True}}
-State # 12  is
+{'E': {'E+T.': True}, 'T': {'T.*F': True}}
+State # 11  is
 Obtained by goto(I,  ) )
 {'F': {'(E).': True}}
+State # 12  is
+Obtained by goto(I,  F )
+{'T': {'T*F.': True}}
 
 For file = "g417":
 Printing Productions:
+D:
++TD
+e
+
 E:
-E+T
-T
+TD
 
 F:
 (E)
-i
+I
 
-S:
-E
+I:
+x
+y
+z
 
 T:
-F
-T*F
+FU
+
+U:
+*FU
+e
 
 Printing kernels of the canonical states of the grammar:
 
@@ -117,73 +126,114 @@ by calling goto(I, '(')
 Note that the added state "S'" isn't produced by goto, hence it doesn't have a symbol
 
 State # 0  is
-[{"S'": {".S": true}}]
+[{"S'": {".E": true}}, "S'"]
 State # 1  is
-[{"S'": {"S.": true}}, "S"]
+[{"S'": {"E.": true}}, "E"]
 State # 2  is
-[{"F": {"i.": true}}, "i"]
+[{"I": {"x.": true}}, "x"]
 State # 3  is
-[{"S": {"E.": true}, "E": {"E.+T": true}}, "E"]
+[{"I": {"y.": true}}, "y"]
 State # 4  is
-[{"T": {"T.*F": true}, "E": {"T.": true}}, "T"]
+[{"E": {"T.D": true}}, "T"]
 State # 5  is
-[{"T": {"F.": true}}, "F"]
+[{"T": {"F.U": true}}, "F"]
 State # 6  is
 [{"F": {"(.E)": true}}, "("]
 State # 7  is
-[{"E": {"E.+T": true}, "F": {"(E.)": true}}, "E"]
+[{"I": {"z.": true}}, "z"]
 State # 8  is
-[{"T": {"T*.F": true}}, "*"]
+[{"F": {"I.": true}}, "I"]
 State # 9  is
-[{"E": {"E+.T": true}}, "+"]
+[{"E": {"TD.": true}}, "D"]
 State # 10  is
-[{"T": {"T*F.": true}}, "F"]
+[{"U": {"*.FU": true}}, "*"]
 State # 11  is
-[{"T": {"T.*F": true}, "E": {"E+T.": true}}, "T"]
+[{"D": {"e.": true}}, "e"]
 State # 12  is
+[{"U": {"e.": true}}, "e"]
+State # 13  is
+[{"D": {"+.TD": true}}, "+"]
+State # 14  is
+[{"F": {"(E.)": true}}, "E"]
+State # 15  is
+[{"T": {"FU.": true}}, "U"]
+State # 16  is
+[{"U": {"*F.U": true}}, "F"]
+State # 17  is
 [{"F": {"(E).": true}}, ")"]
+State # 18  is
+[{"D": {"+T.D": true}}, "T"]
+State # 19  is
+[{"U": {"*FU.": true}}, "U"]
+State # 20  is
+[{"D": {"+TD.": true}}, "D"]
 
 Printing the canonical states of the grammar:
 Obtained by calling closure(I) on the kernel of a state
 State # 0  is
-{'S': {'.E': True}, 'T': {'.T*F': True, '.F': True}, 'E': {'.T': True, '.E+T': True}, "S'": {'.S': True}, 'F': {'.i': True, '.(E)': True}}
+Obtained by goto(I,  S' )
+{"S'": {'.E': True}, 'E': {'.TD': True}, 'T': {'.FU': True}, 'F': {'.I': True, '.(E)': True}, 'I': {'.y': True, '.z': True, '.x': True}}
 State # 1  is
-Obtained by goto(I,  S )
-{"S'": {'S.': True}}
-State # 2  is
-Obtained by goto(I,  i )
-{'F': {'i.': True}}
-State # 3  is
 Obtained by goto(I,  E )
-{'S': {'E.': True}, 'E': {'E.+T': True}}
+{"S'": {'E.': True}}
+State # 2  is
+Obtained by goto(I,  x )
+{'I': {'x.': True}}
+State # 3  is
+Obtained by goto(I,  y )
+{'I': {'y.': True}}
 State # 4  is
 Obtained by goto(I,  T )
-{'T': {'T.*F': True}, 'E': {'T.': True}}
+{'D': {'.+TD': True, '.e': True}, 'E': {'T.D': True}}
 State # 5  is
 Obtained by goto(I,  F )
-{'T': {'F.': True}}
+{'T': {'F.U': True}, 'U': {'.e': True, '.*FU': True}}
 State # 6  is
 Obtained by goto(I,  ( )
-{'T': {'.T*F': True, '.F': True}, 'E': {'.T': True, '.E+T': True}, 'F': {'.i': True, '(.E)': True, '.(E)': True}}
+{'E': {'.TD': True}, 'T': {'.FU': True}, 'F': {'.I': True, '.(E)': True, '(.E)': True}, 'I': {'.y': True, '.z': True, '.x': True}}
 State # 7  is
-Obtained by goto(I,  E )
-{'E': {'E.+T': True}, 'F': {'(E.)': True}}
+Obtained by goto(I,  z )
+{'I': {'z.': True}}
 State # 8  is
-Obtained by goto(I,  * )
-{'T': {'T*.F': True}, 'F': {'.i': True, '.(E)': True}}
+Obtained by goto(I,  I )
+{'F': {'I.': True}}
 State # 9  is
-Obtained by goto(I,  + )
-{'T': {'.T*F': True, '.F': True}, 'E': {'E+.T': True}, 'F': {'.i': True, '.(E)': True}}
+Obtained by goto(I,  D )
+{'E': {'TD.': True}}
 State # 10  is
-Obtained by goto(I,  F )
-{'T': {'T*F.': True}}
+Obtained by goto(I,  * )
+{'I': {'.y': True, '.z': True, '.x': True}, 'U': {'*.FU': True}, 'F': {'.I': True, '.(E)': True}}
 State # 11  is
-Obtained by goto(I,  T )
-{'T': {'T.*F': True}, 'E': {'E+T.': True}}
+Obtained by goto(I,  e )
+{'D': {'e.': True}}
 State # 12  is
+Obtained by goto(I,  e )
+{'U': {'e.': True}}
+State # 13  is
+Obtained by goto(I,  + )
+{'D': {'+.TD': True}, 'I': {'.y': True, '.z': True, '.x': True}, 'T': {'.FU': True}, 'F': {'.I': True, '.(E)': True}}
+State # 14  is
+Obtained by goto(I,  E )
+{'F': {'(E.)': True}}
+State # 15  is
+Obtained by goto(I,  U )
+{'T': {'FU.': True}}
+State # 16  is
+Obtained by goto(I,  F )
+{'U': {'.e': True, '*F.U': True, '.*FU': True}}
+State # 17  is
 Obtained by goto(I,  ) )
 {'F': {'(E).': True}}
+State # 18  is
+Obtained by goto(I,  T )
+{'D': {'+T.D': True, '.e': True, '.+TD': True}}
+State # 19  is
+Obtained by goto(I,  U )
+{'U': {'*FU.': True}}
+State # 20  is
+Obtained by goto(I,  D )
+{'D': {'+TD.': True}}
 
 ]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Lab3[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Lab3[00m$ exit
 
-Script done on Thu 28 May 2020 11:17:24 PM PDT
+Script done on Mon 01 Jun 2020 07:10:59 PM PDT

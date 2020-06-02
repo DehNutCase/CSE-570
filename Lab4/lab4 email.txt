@@ -1,0 +1,169 @@
+CSE Lab4, Ken Lin, 006198682
+
+Grammar 1: Strings of 0's and 1's with unequal numbers of 0's and 1's.
+
+file = 'g41'
+Grammar in file:
+0
+1
+$
+S->B
+S->C
+C->A1C
+C->A1A
+B->A0B
+B->A0A
+A->1A0
+A->0A1
+A->AA
+A->e
+$
+
+LR(0) Table:
+State # 0  is
+{"S'": {'.S': True}, 'C': {'.A1A': True, '.A1C': True}, 'S': {'.C': True, '.B': True}, 'B': {'.A0A': True, '.A0B': True}, 'A': {'.1A0': True, '.e': True, '.AA': True, '.0A1': True}}
+State # 1  is
+Obtained by goto(I,  0 )
+{'A': {'.1A0': True, '.e': True, '.AA': True, '.0A1': True, '0.A1': True}}
+State # 2  is
+Obtained by goto(I,  A )
+{'C': {'A.1A': True, 'A.1C': True}, 'B': {'A.0A': True, 'A.0B': True}, 'A': {'A.A': True, '.1A0': True, '.e': True, '.AA': True, '.0A1': True}}
+State # 3  is
+Obtained by goto(I,  e )
+{'A': {'e.': True}}
+State # 4  is
+Obtained by goto(I,  S )
+{"S'": {'S.': True}}
+State # 5  is
+Obtained by goto(I,  C )
+{'S': {'C.': True}}
+State # 6  is
+Obtained by goto(I,  B )
+{'S': {'B.': True}}
+State # 7  is
+Obtained by goto(I,  1 )
+{'A': {'1.A0': True, '.e': True, '.AA': True, '.0A1': True, '.1A0': True}}
+State # 8  is
+Obtained by goto(I,  1 )
+{'C': {'A1.C': True, 'A1.A': True, '.A1A': True, '.A1C': True}, 'A': {'1.A0': True, '.e': True, '.AA': True, '.0A1': True, '.1A0': True}}
+State # 9  is
+Obtained by goto(I,  0 )
+{'B': {'.A0A': True, 'A0.A': True, '.A0B': True, 'A0.B': True}, 'A': {'.1A0': True, '.e': True, '.AA': True, '.0A1': True, '0.A1': True}}
+State # 10  is
+Obtained by goto(I,  A )
+{'A': {'A.A': True, '.1A0': True, '.AA': True, '.0A1': True, '.e': True, '1A.0': True}}
+State # 11  is
+Obtained by goto(I,  A )
+{'A': {'A.A': True, '.1A0': True, '.AA': True, '.0A1': True, '0A.1': True, '.e': True}}
+State # 12  is
+Obtained by goto(I,  A )
+{'A': {'A.A': True, '.1A0': True, 'AA.': True, '.AA': True, '.0A1': True, '.e': True}}
+State # 13  is
+Obtained by goto(I,  0 )
+{'A': {'.1A0': True, '1A0.': True, '.AA': True, '.0A1': True, '.e': True, '0.A1': True}}
+State # 14  is
+Obtained by goto(I,  A )
+{'B': {'A.0A': True, 'A.0B': True, 'A0A.': True}, 'A': {'A.A': True, '.1A0': True, '.AA': True, '.0A1': True, '0A.1': True, '.e': True}}
+State # 15  is
+Obtained by goto(I,  A )
+{'C': {'A1A.': True, 'A.1A': True, 'A.1C': True}, 'A': {'A.A': True, '.1A0': True, '.AA': True, '.0A1': True, '.e': True, '1A.0': True}}
+State # 16  is
+Obtained by goto(I,  C )
+{'C': {'A1C.': True}}
+State # 17  is
+Obtained by goto(I,  1 )
+{'A': {'.1A0': True, '0A1.': True, '.0A1': True, '1.A0': True, '.AA': True, '.e': True}}
+State # 18  is
+Obtained by goto(I,  B )
+{'B': {'A0B.': True}}
+
+
+An example of parsing a state (state #14):
+State # 14  is
+Obtained by goto(I,  A )
+{'B': {'A.0A': True, 'A.0B': True, 'A0A.': True}, 'A': {'A.A': True, '.1A0': True, '.AA': True, '.0A1': True, '0A.1': True, '.e': True}}
+
+This reads, transitioned from the symbol A, with the productions:
+B -> A.0A
+B -> A.0B
+B -> A0A
+A -> A.A
+A -> .1A0
+A -> .AA
+A -> .0A1
+A -> 0A.1
+A -> .e
+
+
+Grammar g41, which is the 1st grammar, Strings of 0's and 1's with unequal numbers of 0's and 1's., is not LR(0). First, there are null productions in this grammar
+meaning the parse wouldn't be able to tell whether to reduce e to a state or to shift over to the next temrinal.
+Second, there are shfit reduce conflicts in the grammar, example is state 2:
+
+State # 2  is
+Obtained by goto(I,  A )
+{'C': {'A.1A': True, 'A.1C': True}, 'B': {'A.0A': True, 'A.0B': True}, 'A': {'A.A': True, '.1A0': True, '.e': True, '.AA': True, '.0A1': True}}
+
+State 2 has the problematic productions:
+A -> A.A
+A -> .AA
+This is a shift reduce conflict. (Do we move the period over the A or reduce .AA to A immediately?)
+
+Grammar 2: Strings of 0's and 1's that are palindromes
+
+file = 'g42'
+
+Grammar in file:
+1
+0
+$
+S->0
+S->1
+S->e
+S->1S1
+S->0S0
+$
+
+LR(0) Table:
+State # 0  is
+Obtained by goto(I,  S' )
+{"S'": {'.S': True}, 'S': {'.0S0': True, '.0': True, '.e': True, '.1S1': True, '.1': True}}
+State # 1  is
+Obtained by goto(I,  S )
+{"S'": {'S.': True}}
+State # 2  is
+Obtained by goto(I,  0 )
+{'S': {'.1': True, '.e': True, '.1S1': True, '0.S0': True, '0.': True, '.0S0': True, '.0': True}}
+State # 3  is
+Obtained by goto(I,  1 )
+{'S': {'.1': True, '1.': True, '.1S1': True, '.e': True, '.0': True, '1.S1': True, '.0S0': True}}
+State # 4  is
+Obtained by goto(I,  e )
+{'S': {'e.': True}}
+State # 5  is
+Obtained by goto(I,  S )
+{'S': {'0S.0': True}}
+State # 6  is
+Obtained by goto(I,  S )
+{'S': {'1S.1': True}}
+State # 7  is
+Obtained by goto(I,  1 )
+{'S': {'1S1.': True}}
+State # 8  is
+Obtained by goto(I,  0 )
+{'S': {'0S0.': True}}
+
+
+Grammar is not LR(0), there are null productions. Additionally, there are shift reduce conflicts. e.x., State 2:
+State # 2  is
+Obtained by goto(I,  0 )
+{'S': {'.1': True, '.e': True, '.1S1': True, '0.S0': True, '0.': True, '.0S0': True, '.0': True}}
+
+State 2 has the problematic productions:
+S -> 0.S0
+S -> 0.
+
+Seeing 0. would not allow the parser to know whether it should reduce 0. to S or move the period over a future S.
+
+Grammar 3: Strings of 0's and 1's of the form xx
+
+This grammar isn't a CFG, and my programs can't handle it. (And I don't know how to write a context dependent grammar anyway.)

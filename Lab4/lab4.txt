@@ -1,0 +1,196 @@
+Script started on Mon 01 Jun 2020 07:14:01 PM PDT
+]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Lab4[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Lab4[00m$ python3 lab3_lab4.py
+For file = "g41":
+Printing Productions:
+A:
+0A1
+1A0
+AA
+e
+
+B:
+A0A
+A0B
+
+C:
+A1A
+A1C
+
+S:
+B
+C
+
+Printing kernels of the canonical states of the grammar:
+
+Format of a state is: [{dictionary of non_terminals: dictionary of productions}, symbol}]
+i.e. a state of the form [{'S': {'.A': true}}, '('] has the production S -> .A, and is reached
+by calling goto(I, '(')
+Note that the added state "S'" isn't produced by goto, hence it doesn't have a symbol
+
+State # 0  is
+[{"S'": {".S": true}}, "S'"]
+State # 1  is
+[{"A": {"1.A0": true}}, "1"]
+State # 2  is
+[{"B": {"A.0A": true, "A.0B": true}, "A": {"A.A": true}, "C": {"A.1C": true, "A.1A": true}}, "A"]
+State # 3  is
+[{"S": {"C.": true}}, "C"]
+State # 4  is
+[{"S'": {"S.": true}}, "S"]
+State # 5  is
+[{"A": {"e.": true}}, "e"]
+State # 6  is
+[{"A": {"0.A1": true}}, "0"]
+State # 7  is
+[{"S": {"B.": true}}, "B"]
+State # 8  is
+[{"B": {"A0.B": true, "A0.A": true}, "A": {"0.A1": true}}, "0"]
+State # 9  is
+[{"A": {"A.A": true, "0A.1": true}}, "A"]
+State # 10  is
+[{"A": {"1.A0": true}, "C": {"A1.A": true, "A1.C": true}}, "1"]
+State # 11  is
+[{"A": {"A.A": true, "1A.0": true}}, "A"]
+State # 12  is
+[{"A": {"A.A": true, "AA.": true}}, "A"]
+State # 13  is
+[{"B": {"A0B.": true}}, "B"]
+State # 14  is
+[{"A": {"A.A": true, "1A.0": true}, "C": {"A.1C": true, "A.1A": true, "A1A.": true}}, "A"]
+State # 15  is
+[{"A": {"1.A0": true, "0A1.": true}}, "1"]
+State # 16  is
+[{"B": {"A0A.": true, "A.0A": true, "A.0B": true}, "A": {"A.A": true, "0A.1": true}}, "A"]
+State # 17  is
+[{"A": {"0.A1": true, "1A0.": true}}, "0"]
+State # 18  is
+[{"C": {"A1C.": true}}, "C"]
+
+Printing the canonical states of the grammar:
+Obtained by calling closure(I) on the kernel of a state
+State # 0  is
+Obtained by goto(I,  S' )
+{"S'": {'.S': True}, 'S': {'.B': True, '.C': True}, 'A': {'.1A0': True, '.e': True, '.AA': True, '.0A1': True}, 'C': {'.A1A': True, '.A1C': True}, 'B': {'.A0B': True, '.A0A': True}}
+State # 1  is
+Obtained by goto(I,  1 )
+{'A': {'.1A0': True, '.AA': True, '.e': True, '1.A0': True, '.0A1': True}}
+State # 2  is
+Obtained by goto(I,  A )
+{'B': {'A.0A': True, 'A.0B': True}, 'A': {'A.A': True, '.1A0': True, '.e': True, '.AA': True, '.0A1': True}, 'C': {'A.1C': True, 'A.1A': True}}
+State # 3  is
+Obtained by goto(I,  C )
+{'S': {'C.': True}}
+State # 4  is
+Obtained by goto(I,  S )
+{"S'": {'S.': True}}
+State # 5  is
+Obtained by goto(I,  e )
+{'A': {'e.': True}}
+State # 6  is
+Obtained by goto(I,  0 )
+{'A': {'0.A1': True, '.AA': True, '.e': True, '.1A0': True, '.0A1': True}}
+State # 7  is
+Obtained by goto(I,  B )
+{'S': {'B.': True}}
+State # 8  is
+Obtained by goto(I,  0 )
+{'B': {'A0.B': True, 'A0.A': True, '.A0B': True, '.A0A': True}, 'A': {'0.A1': True, '.AA': True, '.e': True, '.1A0': True, '.0A1': True}}
+State # 9  is
+Obtained by goto(I,  A )
+{'A': {'A.A': True, '.1A0': True, '.e': True, '.AA': True, '0A.1': True, '.0A1': True}}
+State # 10  is
+Obtained by goto(I,  1 )
+{'A': {'.1A0': True, '.AA': True, '.e': True, '1.A0': True, '.0A1': True}, 'C': {'.A1A': True, 'A1.A': True, 'A1.C': True, '.A1C': True}}
+State # 11  is
+Obtained by goto(I,  A )
+{'A': {'A.A': True, '.1A0': True, '.e': True, '.AA': True, '1A.0': True, '.0A1': True}}
+State # 12  is
+Obtained by goto(I,  A )
+{'A': {'A.A': True, 'AA.': True, '.1A0': True, '.e': True, '.AA': True, '.0A1': True}}
+State # 13  is
+Obtained by goto(I,  B )
+{'B': {'A0B.': True}}
+State # 14  is
+Obtained by goto(I,  A )
+{'A': {'A.A': True, '.1A0': True, '.e': True, '.AA': True, '1A.0': True, '.0A1': True}, 'C': {'A.1C': True, 'A.1A': True, 'A1A.': True}}
+State # 15  is
+Obtained by goto(I,  1 )
+{'A': {'.1A0': True, '.e': True, '.AA': True, '1.A0': True, '.0A1': True, '0A1.': True}}
+State # 16  is
+Obtained by goto(I,  A )
+{'B': {'A0A.': True, 'A.0A': True, 'A.0B': True}, 'A': {'A.A': True, '.1A0': True, '.e': True, '.AA': True, '0A.1': True, '.0A1': True}}
+State # 17  is
+Obtained by goto(I,  0 )
+{'A': {'0.A1': True, '.e': True, '.AA': True, '1A0.': True, '.1A0': True, '.0A1': True}}
+State # 18  is
+Obtained by goto(I,  C )
+{'C': {'A1C.': True}}
+
+For file = "g42":
+Printing Productions:
+S:
+0
+0S0
+1
+1S1
+e
+
+Printing kernels of the canonical states of the grammar:
+
+Format of a state is: [{dictionary of non_terminals: dictionary of productions}, symbol}]
+i.e. a state of the form [{'S': {'.A': true}}, '('] has the production S -> .A, and is reached
+by calling goto(I, '(')
+Note that the added state "S'" isn't produced by goto, hence it doesn't have a symbol
+
+State # 0  is
+[{"S'": {".S": true}}, "S'"]
+State # 1  is
+[{"S'": {"S.": true}}, "S"]
+State # 2  is
+[{"S": {"0.": true, "0.S0": true}}, "0"]
+State # 3  is
+[{"S": {"1.S1": true, "1.": true}}, "1"]
+State # 4  is
+[{"S": {"e.": true}}, "e"]
+State # 5  is
+[{"S": {"0S.0": true}}, "S"]
+State # 6  is
+[{"S": {"1S.1": true}}, "S"]
+State # 7  is
+[{"S": {"1S1.": true}}, "1"]
+State # 8  is
+[{"S": {"0S0.": true}}, "0"]
+
+Printing the canonical states of the grammar:
+Obtained by calling closure(I) on the kernel of a state
+State # 0  is
+Obtained by goto(I,  S' )
+{"S'": {'.S': True}, 'S': {'.0S0': True, '.0': True, '.e': True, '.1S1': True, '.1': True}}
+State # 1  is
+Obtained by goto(I,  S )
+{"S'": {'S.': True}}
+State # 2  is
+Obtained by goto(I,  0 )
+{'S': {'.1': True, '.e': True, '.1S1': True, '0.S0': True, '0.': True, '.0S0': True, '.0': True}}
+State # 3  is
+Obtained by goto(I,  1 )
+{'S': {'.1': True, '1.': True, '.1S1': True, '.e': True, '.0': True, '1.S1': True, '.0S0': True}}
+State # 4  is
+Obtained by goto(I,  e )
+{'S': {'e.': True}}
+State # 5  is
+Obtained by goto(I,  S )
+{'S': {'0S.0': True}}
+State # 6  is
+Obtained by goto(I,  S )
+{'S': {'1S.1': True}}
+State # 7  is
+Obtained by goto(I,  1 )
+{'S': {'1S1.': True}}
+State # 8  is
+Obtained by goto(I,  0 )
+{'S': {'0S0.': True}}
+
+]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Lab4[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Lab4[00m$ exit
+
+Script done on Mon 01 Jun 2020 07:14:04 PM PDT

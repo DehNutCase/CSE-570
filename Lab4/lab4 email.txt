@@ -159,3 +159,8 @@ Seeing 0. would not allow the parser to know whether it should reduce 0. to S or
 Grammar 3: Strings of 0's and 1's of the form xx
 
 This grammar isn't a CFG, and my programs can't handle it. (And I don't know how to write a context dependent grammar anyway.)
+Strings of the form xx need two different stacks to make, one to store x^reverse, and another
+stack to reverse x^reverse into x, so we can check it against the second half of the string.
+
+But a pushdown automata (equivalent to a CFG) only has a single stack, so this language
+isn't context free.

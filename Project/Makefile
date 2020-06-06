@@ -17,8 +17,7 @@ CC = cc
 
 #KL, test this bit
 a.out: y.tab.c lex.yy.c
-  $(CC) y.tab.c
-
+	$(CC) y.tab.c
 
 cal: y.tab.o lex.yy.o
 	$(CC) -o cal y.tab.o lex.yy.o -ll -lm 

@@ -1,9 +1,29 @@
-DIGIT [0-9]+\.?|[0-9]*\.[0-9]+
+%{
+#include <stdio.h>
+#include "y.tab.h"
 
-%option noyywrap
+int c;
+extern YYSTYPE yylval;
+%}
 
 %%
 
-[ ]
-{DIGIT} { yylval=atof(yytext); return NUM;}
-\n|. {return yytext[0];}
+" ";
+
+
+[a-z] {
+  c = yytext[0];
+  yylval.a = c - 'a';
+  return(LETTER);
+}
+
+[0-9] {
+  c = yytext[0];
+  yylval.a = c - '0';
+  return(DIGIT);
+}
+
+[^a-z0-9\b] {
+  c = yytext[0];
+  return(c);
+}

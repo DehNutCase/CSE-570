@@ -51,19 +51,24 @@ stat: expr {
         (Since it doesn't start with an expr, we assume
         the first expr is simply the last value)
         */
-        $$ = last * $2;
+        last = last * $2;
+        printf("%d\n", last);
       }
     | '/' expr {
-        $$ = last / $2;
+        last = last / $2;
+        printf("%d\n", last);
       }
     | '%' expr {
-        $$ = last % $2;
+        last = last % $2;
+        printf("%d\n", last);
       }
     | '+' expr {
-        $$ = last + $2;
+        last = last + $2;
+        printf("%d\n", last);
       }
     | '-' expr {
-        $$ = last - $2;
+        last = last - $2;
+        printf("%d\n", last);
       }
 
 expr: '(' expr ')' {

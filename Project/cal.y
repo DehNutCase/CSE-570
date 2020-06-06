@@ -50,7 +50,7 @@ stat: expr {
       
       Note that last is initiated to 0 to prevent errors.
       */
-      regs[$1] = $3;
+      regs[$1] = last;
     };
     | '*' expr {
         /* This is what uses the last result to calculate

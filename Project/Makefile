@@ -19,6 +19,7 @@ CC = cc
 a.out: y.tab.c lex.yy.c
   $(CC) y.tab.c
 
+
 cal: y.tab.o lex.yy.o
 	$(CC) -o cal y.tab.o lex.yy.o -ll -lm 
 

@@ -442,7 +442,7 @@ char *yytext;
 #line 1 "cal.l"
 #line 2 "cal.l"
 #include <stdio.h>
-//#include "y.tab.h"
+#include "y.tab.h"
 
 int c;
 extern YYSTYPE yylval;

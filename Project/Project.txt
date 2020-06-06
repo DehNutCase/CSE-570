@@ -1,0 +1,17 @@
+Script started on 2020-06-06 16:52:36-07:00 [TERM="xterm" TTY="/dev/pts/1" COLUMNS="80" LINES="24"]
+]0;006198682@csusb.edu@jb358-7:~/cse570/CSE-570/Project[006198682@csusb.edu@jb358-7 Project]$ ./a.out
+1+1
+2
+/2
+1
+*5
+5
+a=1+1
+a*2
+4
+c=
+a*c
+8
+]0;006198682@csusb.edu@jb358-7:~/cse570/CSE-570/Project[006198682@csusb.edu@jb358-7 Project]$ exit
+
+Script done on 2020-06-06 16:53:07-07:00 [COMMAND_EXIT_CODE="0"]

@@ -1,108 +1,45 @@
-# general principles of make -
-# lines are of the form
+# A Makefile for simple lex and yacc examples
 
-# target: ingredients
-# (tab)	instruction to make target.
+# Comment out the proper lines below according to the scanner and
+# parser generators available in your system
 
-# sensitive to format - target definitions must begin in 
-# first column, instruction lines must begin with tab
-# lines beginning in # are comments
+LEX = lex
+YACC = yacc -d
+# LEX = flex 
+# YACC = bison -d
 
-# when you type "make", the first target listed in the file
-# is built (you can get any target by typing "make thing" -
-# for example to make just pre.o here I would type
-# "make pre.o"
+# We assume that your C-compiler is called cc
 
-# if the target is missing or is older than any of the ingredients,
-# then it is made - else nothing happens.
+CC = cc
 
-# same rules apply when making any of the ingredients.
-# some targets may be completely independent of the ultimate
-# result (like clean and print, below)
+# cal is the final object that we will generate, it is produced by
+# the C compiler from the y.tab.o and from the lex.yy.o
 
-# these are definitions that fill in $FLAGS and $CC below
-# -ggdb inserts hooks for debugger into compiled code
-# gcc is the gnu C compiler
+cal: y.tab.o lex.yy.o
+	$(CC) -o cal y.tab.o lex.yy.o -ll -lm 
 
-FLAGS := -ggdb
-CC := gcc
+# These dependency rules indicate that (1) lex.yy.o depends on
+# lex.yy.c and y.tab.h and (2) lex.yy.o and y.tab.o depend on cal.h.
+# Make uses the dependencies to figure out what rules must be run when
+# a file has changed.
 
-# the final executable result - spf (subset PFortran compiler)
-# (a parallel extension to Fortran)
+lex.yy.o: lex.yy.c y.tab.h
+lex.yy.o y.tab.o: cal.h
 
-# spf is built from the 4 specified object files
-# the line below the spf definition is the instruction
-# to the gcc compiler to build the executable 
+## This rule will use yacc to generate the files y.tab.c and y.tab.h
+## from our file cal.y
 
-spf: pre.o cal.o lex.o hash.o
-	$(CC) $(FLAGS) pre.o hash.o cal.o lex.o -o spf
+y.tab.c y.tab.h: cal.y
+	$(YACC) -v cal.y
 
-# the following 4 lines are how to build the ingredients for the 
-# first line - the object files pre, gram, lex and hash
+## this is the make rule to use lex to generate the file lex.yy.c from
+## our file cal.l
 
+lex.yy.c: cal.l
+	$(LEX) cal.l
 
-# hash table routines - used to build symbol table
-
-hash.o: hash.c
-	$(CC) $(FLAGS) -c hash.c -o hash.o
-
-# preprocessor - massage fortran code so it is easier to write a
-# grammar that handles it
-
-pre.o: pre.c hash.h
-	$(CC) $(FLAGS) -c pre.c -o pre.o
-
-# the parser and code generator
-# built from the C program and header that is output by yacc
-
-cal.o: cal.tab.c hash.h
-	$(CC) $(FLAGS) -c cal.tab.c -o cal.o
-
-# the lex object file 
-# built from the C program that is output by lex
-
-lex.o: lex.yy.c
-	$(CC) $(FLAGS) -c lex.yy.c -o lex.o
-
-# the following lines build the c programs and header files
-# needed to make the lexer and parser object files
-# both the lexer and the parser need the symbol table, definitions
-# for which are in hash.h
-
-# builds the lexer program code from the lexical definition
-# gram.l, and the header files created by yacc
-#
-# flex is gnu lex
-# lex.yy.c is the default output name
-lex.yy.c: cal.l cal.h cal.tab.h
-	flex cal.l 
-
-# builds the parser program code gram.tab.c from
-# the grammar definition gram.y
-#	
-# bison is the gnu version of yacc
-gram.tab.c: cal.y hash.h 
-	bison --debug --verbose -d -k gram.y
-
-
-# substitute the name of your .y file for "gram"
-#
-# the flags --debug --verbose cause bison to generate a listing
-# called gram.output that describes the states, parse tables and
-# specifies conflicts in the parser
-# the flags -d -k generate gram.h, gram.tab.h which are header files
-# used by lex.
-
-
-# this is an instruction used to print all the relevant files
-# called by typing "make printout"
-
-printout: 
-	enscript spf.h cal.h cal.tab.h hash.h pre.c hash.c cal.y cal.l makefile
-
-# this instruction cleans up the temporary files left by the
-# compilation process - this is also useful to force recompilation
-# of everything (type "make clean" to invoke this.
+## Make clean will delete all of the generated files so we can start
+## from scratch
 
 clean:
-	rm -f cal.tab.c lex.yy.c *.o *.spf spf.f core output
+	-rm -f *.o lex.yy.c *.tab.*  cal *.output

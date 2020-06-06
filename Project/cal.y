@@ -5,6 +5,7 @@ int base;
 int yylex();
 int yyerror(char *s);
 int yywrap();
+int last;
 %}
 
 %start list
@@ -31,10 +32,39 @@ list: /* empty */
 
 stat: expr {
         printf("%d\n", $1);
+        last = $1; /* We memorize the last result.*/
       }
     | LETTER '=' expr {
+      /* KL, this is what stores a value to a variable 
+      Note that variables are single characters, lowercase
+      due to their definition in cal.l 
+      
+      That is, this is the form of the assignment statement.
+      */
       regs[$1] = $3;
     };
+    | '*' expr {
+        /* This is what uses the last result to calculate
+        the next.
+        
+        That is, this is the form of the exit/quit feature
+        (Since it doesn't start with an expr, we assume
+        the first expr is simply the last value)
+        */
+        $$ = last * $2;
+      }
+    | '/' expr {
+        $$ = last / $2;
+      }
+    | '%' expr {
+        $$ = last % $2;
+      }
+    | '+' expr {
+        $$ = last + $2;
+      }
+    | '-' expr {
+        $$ = last - $2;
+      }
 
 expr: '(' expr ')' {
         $$ = $2;

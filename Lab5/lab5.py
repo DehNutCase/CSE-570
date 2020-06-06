@@ -442,7 +442,11 @@ def SLR_table(grammar, start):
             #start + "'" is S'
             if symbol_string == start:
               #set action[i, S'] to "accept"
-              symbol = start + "'"
+              #Alternatively, set action [i, $] to accept, we're using the alternative
+              
+              #symbol = start + "'"
+              symbol = "$"
+              
               #if we don't have an entry for symbol in the parsing table, add it
               if not symbol in parsing_table[i[1]]:
                 parsing_table[i[1]][symbol] = []

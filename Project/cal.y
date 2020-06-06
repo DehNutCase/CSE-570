@@ -5,7 +5,7 @@ int base;
 int yylex();
 int yyerror(char *s);
 int yywrap();
-int last;
+int last = 0;
 %}
 
 %start list
@@ -40,6 +40,15 @@ stat: expr {
       due to their definition in cal.l 
       
       That is, this is the form of the assignment statement.
+      */
+      regs[$1] = $3;
+    };
+    | LETTER '='{
+      /* KL, We allow storing variables from the last result.
+      Typing LETTER = will cause LETTER to have the value of
+      the last result.
+      
+      Note that last is initiated to 0 to prevent errors.
       */
       regs[$1] = $3;
     };

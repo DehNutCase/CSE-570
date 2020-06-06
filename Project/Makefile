@@ -15,6 +15,10 @@ CC = cc
 # cal is the final object that we will generate, it is produced by
 # the C compiler from the y.tab.o and from the lex.yy.o
 
+#KL, test this bit
+a.out: y.tab.c lex.yy.c
+  $(CC) y.tab.c
+
 cal: y.tab.o lex.yy.o
 	$(CC) -o cal y.tab.o lex.yy.o -ll -lm 
 

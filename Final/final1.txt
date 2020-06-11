@@ -1,0 +1,52 @@
+Script started on Wed 10 Jun 2020 04:51:46 PM PDT
+p]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Lab2[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Lab2[00m$ python3 final.py
+For file = "f1":
+Printing Productions:
+E:
+(FL)
+
+F:
+*
++
+-
+d
+
+I:
+E
+n
+
+L:
+I
+LI
+
+S:
+E
+
+Printing firsts:
+E:
+(
+F:
+*+-d
+I:
+(n
+L:
+(n
+S:
+(
+
+Printing follows:
+E:
+$()n
+F:
+(n
+I:
+()n
+L:
+()n
+S:
+$
+
+
+]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Lab2[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Lab2[00m$ exit
+
+Script done on Wed 10 Jun 2020 04:51:58 PM PDT

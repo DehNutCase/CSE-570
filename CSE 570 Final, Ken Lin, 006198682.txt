@@ -1,0 +1,721 @@
+CSCI 570/670 Final Examination - Spring 2020
+
+
+NAME: Ken Lin
+
+Student ID: 006198682
+
+Download this document, use a text editor or word processing program to edit this file. Save your completed
+test as a text file or in Microsoft Word .doc or .docx format, email your work to me at ernesto@csusb.edu.
+
+There are 3 problems, each may haveseveral related questions 
+Enter your work and your answer below each question, and before the next Enter any calculations you used to 
+find the answer, as well as the answer itself. For example:
+
+If you need drawings or graphs, you may send photos or scans in addition to this document - label them with
+the problem they apply to, your name and student id.
+
+THIS DOCUMENT IS WHAT I WILL BE LOOKING AT AND GRADING. Email me your text or Word file no later than
+midnight Friday June 12. (If your are unable to do this, email me to let me know you are delayed, but
+you may get an "I"=incomplete until I can finish grading your paper, at which time I will
+replace the I with your actual grade.)
+
+You may consult anything in your book, library or internet, but please do not consult each other.
+
+
+
+1) LR sets and parser
+=====================
+
+Consider the following grammar describing Lisp arithmetic:
+
+ S -> E			// S is start symbol, E is expression
+ E -> (FL)		// F is math function, L is a list
+ L -> LI | I		// I is an item in a list
+ I -> n | E		// an item is a number n or an expression E
+ F -> + | - | * | *
+
+Find FIRST, FOLLOW and LR(0) sets for this grammar.
+Is the grammar LR(0)? Is it SLR?
+
+
+I'm assuming the line  F -> + | - | * | * is supposed to be:
+ F -> + | - | * | \
+(That is, plus, minus, multiply, divide, rather than having two multiplies.)
+
+However, because "\" is often used as an escape character in strings, I have translated the
+line into:
+F -> + | - | * | d
+Where d is the representation of "\"
+
+The grammar, converted in the form recognized by the labs, is then:
++
+-
+*
+d
+n
+(
+)
+$
+S->E
+E->(FL)
+L->LI
+L->I
+I->n
+I->E
+F->+
+F->-
+F->*
+F->d
+$
+
+
+I verified the results of my lab programs with http://jsmachines.sourceforge.net/machines/slr.html
+which produces the same output, although with a different format than mine.
+(If there are any errors, it would be because I incorrectly converted the grammar.)
+
+Using the programs from lab2 and lab3 the first sets are:
+Firsts:
+E: (
+F: *+-d
+I: (n
+L: (n
+S: (
+
+(E.x. for F, the items in the first set are "*", "+," "-," and "d".)
+Note that "d" is equal to "\," but I chose a different character
+in case of conflcits.
+
+The follows are:
+Follows:
+E: $()n
+F: (n
+I: ()n
+L: ()n
+S: $
+
+(E.x. for F, the items inthe follow set are "(" and "n".)
+
+And the LR(0) set, which I assume is equivalent to the canonical states, are:
+State # 0  is
+[{"S'": {".S": true}}, "S'"]
+State # 1  is
+[{"E": {"(.FL)": true}}, "("]
+State # 2  is
+[{"S'": {"S.": true}}, "S"]
+State # 3  is
+[{"S": {"E.": true}}, "E"]
+State # 4  is
+[{"F": {"*.": true}}, "*"]
+State # 5  is
+[{"F": {"d.": true}}, "d"]
+State # 6  is
+[{"F": {"+.": true}}, "+"]
+State # 7  is
+[{"E": {"(F.L)": true}}, "F"]
+State # 8  is
+[{"F": {"-.": true}}, "-"]
+State # 9  is
+[{"I": {"n.": true}}, "n"]
+State # 10  is
+[{"L": {"I.": true}}, "I"]
+State # 11  is
+[{"L": {"L.I": true}, "E": {"(FL.)": true}}, "L"]
+State # 12  is
+[{"I": {"E.": true}}, "E"]
+State # 13  is
+[{"L": {"LI.": true}}, "I"]
+State # 14  is
+[{"E": {"(FL).": true}}, ")"]
+
+
+Format of a state is: [{dictionary of non_terminals: dictionary of productions}, symbol]
+
+As an example, State #0 is read:
+State # 0  is
+[{"S'": {".S": true}}, "S'"]
+
+Which means the state is reached via the symbol "S'", since it's the second item in the list that represents the state.
+The dictionary is parsed with the keys being non_terminals, and the values being dictionaries with productions as keys.
+
+e.x. {"S'": {".S": true}}
+means that State #0 has the production S'-> .S
+(And only that production, since that's the entire dictionary.)
+
+
+
+Note that this is the kernel form of the states, to obtain the full states you need to call closure on the states, which obtains:
+State # 0  is
+Obtained by goto(I,  S' )
+{"S'": {'.S': True}, 'S': {'.E': True}, 'E': {'.(FL)': True}}
+State # 1  is
+Obtained by goto(I,  ( )
+{'F': {'.+': True, '.d': True, '.*': True, '.-': True}, 'E': {'(.FL)': True}}
+State # 2  is
+Obtained by goto(I,  S )
+{"S'": {'S.': True}}
+State # 3  is
+Obtained by goto(I,  E )
+{'S': {'E.': True}}
+State # 4  is
+Obtained by goto(I,  * )
+{'F': {'*.': True}}
+State # 5  is
+Obtained by goto(I,  d )
+{'F': {'d.': True}}
+State # 6  is
+Obtained by goto(I,  + )
+{'F': {'+.': True}}
+State # 7  is
+Obtained by goto(I,  F )
+{'L': {'.LI': True, '.I': True}, 'I': {'.E': True, '.n': True}, 'E': {'.(FL)': True, '(F.L)': True}}
+State # 8  is
+Obtained by goto(I,  - )
+{'F': {'-.': True}}
+State # 9  is
+Obtained by goto(I,  n )
+{'I': {'n.': True}}
+State # 10  is
+Obtained by goto(I,  I )
+{'L': {'I.': True}}
+State # 11  is
+Obtained by goto(I,  L )
+{'L': {'L.I': True}, 'I': {'.E': True, '.n': True}, 'E': {'.(FL)': True, '(FL.)': True}}
+State # 12  is
+Obtained by goto(I,  E )
+{'I': {'E.': True}}
+State # 13  is
+Obtained by goto(I,  I )
+{'L': {'LI.': True}}
+State # 14  is
+Obtained by goto(I,  ) )
+{'E': {'(FL).': True}}
+
+States are parsed the same way, although what symbol is used to reach the state is now the entry in "Obtained by goto(I, x)", where "x" is the symbol used.
+For example:
+
+State # 0  is
+Obtained by goto(I,  S' )
+{"S'": {'.S': True}, 'S': {'.E': True}, 'E': {'.(FL)': True}}
+
+This means State #0 is reached by the symbol "S'"
+And the state contains the transitions:
+S'->.S      (from "S'": {'.S': True})
+S->.E       (from 'S': {'.E': True})
+E->.(FL)    (from 'E': {'.(FL)': True})
+
+
+The script files of me running the lab2 and lab3 programs are attached as
+final1.txt and final2.txt
+
+The output of applying the lab2 program to the grammar is:
+Printing Productions:
+E:
+(FL)
+
+F:
+*
++
+-
+d
+
+I:
+E
+n
+
+L:
+I
+LI
+
+S:
+E
+
+Printing firsts:
+E:
+(
+F:
+*+-d
+I:
+(n
+L:
+(n
+S:
+(
+
+Printing follows:
+E:
+$()n
+F:
+(n
+I:
+()n
+L:
+()n
+S:
+$
+
+
+The output of running the lab3 program on the grammar is:
+
+Printing kernels of the canonical states of the grammar:
+
+Format of a state is: [{dictionary of non_terminals: dictionary of productions}, symbol}]
+i.e. a state of the form [{'S': {'.A': true}}, '('] has the production S -> .A, and is reached
+by calling goto(I, '(')
+
+State # 0  is
+[{"S'": {".S": true}}, "S'"]
+State # 1  is
+[{"E": {"(.FL)": true}}, "("]
+State # 2  is
+[{"S'": {"S.": true}}, "S"]
+State # 3  is
+[{"S": {"E.": true}}, "E"]
+State # 4  is
+[{"F": {"*.": true}}, "*"]
+State # 5  is
+[{"F": {"d.": true}}, "d"]
+State # 6  is
+[{"F": {"+.": true}}, "+"]
+State # 7  is
+[{"E": {"(F.L)": true}}, "F"]
+State # 8  is
+[{"F": {"-.": true}}, "-"]
+State # 9  is
+[{"I": {"n.": true}}, "n"]
+State # 10  is
+[{"L": {"I.": true}}, "I"]
+State # 11  is
+[{"L": {"L.I": true}, "E": {"(FL.)": true}}, "L"]
+State # 12  is
+[{"I": {"E.": true}}, "E"]
+State # 13  is
+[{"L": {"LI.": true}}, "I"]
+State # 14  is
+[{"E": {"(FL).": true}}, ")"]
+
+Printing the canonical states of the grammar:
+Obtained by calling closure(I) on the kernel of a state
+State # 0  is
+Obtained by goto(I,  S' )
+{"S'": {'.S': True}, 'S': {'.E': True}, 'E': {'.(FL)': True}}
+State # 1  is
+Obtained by goto(I,  ( )
+{'F': {'.+': True, '.d': True, '.*': True, '.-': True}, 'E': {'(.FL)': True}}
+State # 2  is
+Obtained by goto(I,  S )
+{"S'": {'S.': True}}
+State # 3  is
+Obtained by goto(I,  E )
+{'S': {'E.': True}}
+State # 4  is
+Obtained by goto(I,  * )
+{'F': {'*.': True}}
+State # 5  is
+Obtained by goto(I,  d )
+{'F': {'d.': True}}
+State # 6  is
+Obtained by goto(I,  + )
+{'F': {'+.': True}}
+State # 7  is
+Obtained by goto(I,  F )
+{'L': {'.LI': True, '.I': True}, 'I': {'.E': True, '.n': True}, 'E': {'.(FL)': True, '(F.L)': True}}
+State # 8  is
+Obtained by goto(I,  - )
+{'F': {'-.': True}}
+State # 9  is
+Obtained by goto(I,  n )
+{'I': {'n.': True}}
+State # 10  is
+Obtained by goto(I,  I )
+{'L': {'I.': True}}
+State # 11  is
+Obtained by goto(I,  L )
+{'L': {'L.I': True}, 'I': {'.E': True, '.n': True}, 'E': {'.(FL)': True, '(FL.)': True}}
+State # 12  is
+Obtained by goto(I,  E )
+{'I': {'E.': True}}
+State # 13  is
+Obtained by goto(I,  I )
+{'L': {'LI.': True}}
+State # 14  is
+Obtained by goto(I,  ) )
+{'E': {'(FL).': True}}
+
+
+
+
+2) Translation
+==============
+
+The following grammar applies + and * operators to integer and real 
+constants. The result of adding two integers is type integer, otherwise the 
+result is type real. A number (T) with a decimal point is real, otherwise is 
+integer. A var is an identifier in a symbol table, its type is either int or real
+
+E-> E+T | T
+T-> T*F | F
+F-> num.num | num | var | ( E )
+
+Write a syntax directed definition for this grammar to determine the type of 
+each subexpression; if an operation involves mixed integer and real values,
+convert integer values to real.
+
+Write semantic actions to output 3-addres code, and auxiliary
+functions for use during compilation . 
+
+Assume the following operators:
+
+cout << (list of stuff to output in one line)
+value=getval(num.num | num | var) // input function, returns value
+type=gettype(num.num | num | var) // inpur function, returns type
+r.i=getreg 		// returns an available register, labels it i
+			// (i is a label you assign)
+
+
+LOADREG dest value	// load a value from getval into a register
+RL2INT dest src		// real to int - truncates fractional part
+INT2RL dest src 	// integer to real
+ADDI dest src1 src2	// integer sum
+ADDR dest src1 src2	// real sum
+MULI dest src1 src2	// integer multiply
+MULR dest src1 src2	// real multiply
+
+(If you believe you need any additional operators, you may
+add them to the above list).
+
+First, I'll place each production on its own line.
+
+E-> E+T
+E-> T
+T-> T*F 
+T-> F
+F-> num.num 
+F-> num 
+F-> var 
+F-> ( E )
+
+Syntax Directed Definition:
+
+Production                Semantic Rules (peusdo code)
+//E1 and E are both "E", but E1 had its name changed to distinguish them
+E-> E1+T                  {E.val = E1.val + T.val;
+                            if (E1.type = real or T.type = real) {
+                              E.type = real
+                            } else {
+                              E.type = int
+                            }
+                          }
+
+E-> T                     {E.val = T.val; E.type = T.type} //just passing a value & type from a term to an expression
+
+//T and T1 are both "T," but T1 had its name changed to distinguish
+T-> T1*F                  {T.val = T1.val * F.val; 
+                            if (T1.type = real or F.type = real) {
+                              T.type = real
+                            } else {
+                              T.type = int
+                            }
+                          }
+                          //real * int or real * real results in type real, otherwise it's int * int, which is int
+ 
+T-> F                     {T.val = F.val; T.type = F.type} //Strictly speaking, we probably don't actually have to do
+                          //anything here, but it's easier to understand if I match the semantic rules
+                          //with the productions
+
+//num1 and num2 are both "num," but their names are changed to distinguish them
+F-> num1.num2             {F.val = num + 0.num2; F.type = real;} //A number with a decimal point is real
+F-> num                   {F.val = num; F.type = int;} //A number without a decimal point is an int
+F-> var                   {F.val = var.val; F.type = var.type} //get the value and type from a variable
+F-> ( E )                 {F.val = E.val; F.type = E.type} //get value and type from the expression inside ()
+
+
+Now we need to turn the peusdo code into 3-address code.
+
+Additionally, we'll probably want to define what the data structure we're using to store everything looks like:
+union {
+  int value;
+  real value; //this is completely cheating, but let's assume whatever language I'm using is smart enough
+              //to use the int version of "value" for ints, and the real version fo "value" for reals
+              //oh and we're assuming "real" is an actual type in the language, rather than being forced to use
+              //"double" or something
+              
+  str type; //I don't think the code cares about using the actual value from "type" as a type, so we can just store it in a string
+  register r.val; //assuming "register" is whatever type deals with registers in our language
+  register r.type;
+};
+
+I'm assuming the method r.i.free() will free up a register for other things to use.
+Since we have to ask for registers manually my code will assume that we need to release registers manually.
+e.x to tell the machine that we can free up register F.r.val I'll call F.r.val.free();
+
+Also assuming that the method r.i.get() will get the value inside the register and also convert it to the
+right format. (That is, if we did int a = r.i.get(); we'll get an integer in "a".) We need this since I'm 
+not sure if I can assume I'm allowed to use math outside the three address code.
+
+Also, I need the "COPY dest src" operator, which copies whatever is in src to dest.
+(I don't, strictly speaking, ened this operator, but it makes thing a bit easier.)
+
+
+
+Syntax Directed Definition:
+(Note that I did the productions of F to terminals beore the earlier productions, so my comments might make
+more sense if you read the comments from the productions of F first.)
+
+Production                Semantic Rules
+//E1 and E are both "E", but E1 had its name changed to distinguish them
+E-> E1+T                  {//Going to assume we can't use our language to do math, so we have to
+                           //use the registers for math
+                           //That is, I can't just go E.value = E1.value + T.value and call it a day
+                            
+                            if (E1.type == "real" or T.type == "real") {
+                              //we're doing real math on real numbers, so make sure we use real math stuff
+                              E.type = "real"; //We're storing type as a string in our union
+                              
+                              if (E1.type == "int") {
+                                cout << "INT2RL %E1.r.val %E1.r.val"; //Converting the value inside E1.r.val to real
+                                //Note that the above line doesn't actually do what I want it to do, please assume that
+                                //%E1.r.val prints out whatever register it refers to rather than the literal
+                                //"%E1.r.val" like it would in C
+                                
+                                cout << "COPY %E1.r.type %T.r.val"; //Since E1. is an int but one of E1 or T*F
+                                //is a real, T is real. Further, we don't know how the system we're using
+                                //stores types, so one of the safe ways to get the right type is to copy
+                                //the type from T, since we know T is real
+                              }
+                              if (T.type == "int") {
+                                cout << "INT2RL %T.r.val %T.r.val";
+                              }
+                              
+                              cout << "ADDR %E1.r.val %E1.r.val %T.r.val"; //We properly converted the values, so we can add
+                              //note that we stored the result by overwriting whatever's in %E1.r.val
+                              //since we won't need that register once we've used its value
+                              T.r.val.free(); //Freeing up T.r.val since we also don't need it anymore
+                              T.r.type.free(); //We only needed this to copy to E1.r.type
+                              
+                              E.r.val = E1.r.val; //We've stored the value in E1's register, so now we're passing it to E
+                              E.r.type = E1.r.type; //E1.r.type is guaranteed to be whatever value we're using for "real"
+                              //because we've copied it from T.r.type if E1 was an integer
+                              E.value = E1.r.val.get(); //We aren't allowed to do math, so we have to get the value
+                              //from the register
+                              
+                              //At this point we've filled value, type, r.val, and r.type in our union
+                              //which is everything we needed
+                            } else {
+                              //If we're here both E1 and T are integers
+                              E.type = "int"; //storing type as a string
+                              
+                              cout << "ADDI %E1.r.val %E1.r.val %T.r.val"; //We know we're adding Integers
+                              T.r.val.free();
+                              T.r.type.free();
+                              
+                              E.value = E1.r.val.get();
+                              E.r.val = E1.r.val;
+                              E.r.type = E1.r.type;
+                              
+                              //At this point we filled up type, value, r.val, and r.type in our union.
+                              //We also freeded T's registers
+                            }
+                          }
+
+E-> T                     {E.value = T.value; //get value and type from the expression inside ()
+                            E.type = T.type;
+                            E.r.val = T.r.val; //We didn't do any processing, so we can just use E's registers
+                            E.r.type = T.r.type //Rather than asking for a new one
+                            
+                            //We didn't really do anything in this step, so we shouldn't need to cout anything
+                            //If we're being really efficient I guess we should delete T here, since we no
+                            //longer need it
+                          }
+
+//T and T1 are both "T," but T1 had its name changed to distinguish
+T-> T1*F                  {//We can pretty much just copy and paste the code from E->E1+T
+                            
+                            if (T1.type == "real" or F.type == "real") {
+                              T.type = "real";
+                              
+                              if (T1.type == "int") {
+                                cout << "INT2RL %T1.r.val %T1.r.val";
+                                cout << "COPY %T1.r.type %F.r.val"; //Copying F's type to T1's register, since
+                                //T1's registers are the ones we're keeping for later
+                              }
+                              if (F.type == "int") {
+                                cout << "INT2RL %F.r.val %F.r.val";
+                              }
+                              
+                              cout << "ADDR %T1.r.val %T1.r.val %F.r.val";
+                              F.r.val.free(); //F is no longer needed, so we free its registers
+                              F.r.type.free(); //I'm not deleting F itself, so I guess I'm assuming our language
+                              //has garbage collection
+                              
+                              
+                              T.r.val = T1.r.val;
+                              T.r.type = T1.r.type;
+                              T.value = T1.r.val.get(); //Because of the assumption that we can't do math
+                              //we have to copy the value from the register
+                              
+                              //At this point we've filled value, type, r.val, and r.type in our union
+                            } else {
+                              T.type = "int"; //storing type as a string
+                              
+                              cout << "ADDI %T1.r.val %T1.r.val %F.r.val"; //We know we're adding Integers
+                              F.r.val.free();
+                              F.r.type.free();
+                              
+                              T.value = T1.r.val.get();
+                              T.r.val = T1.r.val;
+                              T.r.type = T1.r.type;
+                              
+                              //At this point we filled up type, value, r.val, and r.type in our union.
+                            }
+                          }
+ 
+T-> F                     {T.value = F.value; //Same thing as production E->T
+                            T.type = F.type;
+                            T.r.val = F.r.val;
+                            T.r.type = F.r.type
+                            
+                            //filled up type, value, r.val, r.type, which is all we care about
+                          }
+
+//num1 and num2 are both "num," but their names are changed to distinguish them
+F-> num1.num2             {value = getval(num1.num2); //A number with a decimal point is real
+                            type = gettype(num1.num2); //we can probably just assume the type is real
+                            //but since we have a function to get the type, let's use it
+                            r.val = getreg; //get registers to hold the type and value for F
+                            r.type = getreg;
+                            
+                            cout << "LOADREG %r.val %value"; //this line doesn't actually work
+                            //if I was actually programming this in C it'd be something like 
+                            //printf("LOADREG %s %d", r.val, value);
+                            //But just assume that %x in a string means take the value of x rather
+                            //than literally printing "%" and "x"
+                            //anyway, that was code to store the value of F
+                            
+                            cout << "LOADREG %r.type %type"; //code to store type of F
+                            
+                            F.value = value; //I'm not sure if this is necessary, but I'm storing the value
+                            //of F inside the C program as well
+                            F.type = type;
+                            F.r.val = r.val; //storing inside F the register holding its value
+                            F.r.type = r.type; //storing inside F the register holding its type
+                            //possible I didn't need to do this, but the line r.i = getreg where only "i"
+                            //was the label I assign suggested that "r" is an address space I didn't want to mess with
+                            //Was that line supposed to be "i=getreg" rather than "r.i=getreg"?
+                          }
+
+F-> num                   {value = getval(num); //A number without a decimal point is an int
+                            type = gettype(num); //We can probably assume this is an int, but lets use gettype anyway
+                            r.val = getreg; //get registers to hold the type and value for F
+                            r.type = getreg;
+                            
+                            //everything else is more or less identical to the previous production
+                            cout << "LOADREG %r.val %value"; //%r.val prints the register we're using, %value the value of F
+                            cout << "LOADREG %r.type %type";
+                            
+                            F.value = value;
+                            F.type = type;
+                            F.r.val = r.val;
+                            F.r.type = r.type;
+                          }
+                          
+F-> var                   {value = getval(var); //We don't know what a variable's type is
+                            type = gettype(var); //But gettype means that isn't an issue
+                            r.val = getreg;
+                            r.type = getreg;
+                            
+                            cout << "LOADREG %r.val %value"; //%r.val prints the register we're using, %value the value of F
+                            cout << "LOADREG %r.type %type";
+                            
+                            F.value = value;
+                            F.type = type;
+                            F.r.val = r.val;
+                            F.r.type = r.type;
+                            //All three productions of "F" is basically identical
+                            //At the end of the production the code to printed to stdout (assuming that's where we're printing)
+                            //Took two registered and stored the type and value of "F" inside them
+                          }
+                          
+F-> ( E )                 {F.value = E.value; //get value and type from the expression inside ()
+                            F.type = E.type;
+                            F.r.val = E.r.val; //We didn't do any processing, so we can just use E's registers
+                            F.r.type = E.r.type //Rather than asking for a new one
+                            
+                            //I don't believe we need to cout anything for this production, since we didn't
+                            //really do anything
+                          }
+
+
+
+The value X.type stores the type of each subexpression, and the types are converted properly. Note that I'm not
+completely sure if we're allowed to use the registers to do math like this.
+If we're not allowed to use the registers to do math but are allowed to use the code, then something like
+X.val = Y.val + Z.val or X.val = Y.val * Z.val will work for calculating the values assuming the language
+can handle implicit type conversion. (And that it converts ints to reals rather than the other way around.)
+
+
+Derivation and parse tree
+=========================
+Give a rightmost derivation of the string (x+a)*(y+a) using:
+
+S=> E
+E=> E+T | T
+T=> T*F | F
+F=> i | (E)
+
+The lexical analyzer returns a token i==identifier for variables 'x','y' and 'a'.
+Display the parse tree.
+
+String after lexical analyzer is done with it:
+(i+i)*(i+i)
+
+Initial string: "S"
+
+Deriving:
+S->E                                           //S to E
+E->T                                           //E to T
+T->T*F                                         //T to T*F
+T*F->T*(E)                                     //F to (E)
+T*(E)->T*(E+T)                                 //E to E+T
+T*(T)->T*(E+F)                                 //T to F
+T*(E+F)->T*(E+i)                               //F to i (this 'i' is an a)
+T*(E+i)->T*(T+i)                               //E to T
+T*(T+i)->T*(F+i)                               //T to F
+T*(F+i)->T*(i+i)                               //F to i (this 'i' is an y)
+T*(i+i)->F*(i+i)                               //T to F
+F*(i+i)->(E)*(i+i)                             //F to (E)
+(E)*(i+i)->(E+T)*(i+i)                         //E to E+T
+(E+T)*(i+i)->(E+F)*(i+i)                       //T to F
+(E+F)*(i+i)->(E+i)*(i+i)                       //F to i (this 'i' is an a)
+(E+i)*(i+i)->(T+i)*(i+i)                       //E to T
+(T+i)*(i+i)->(F+i)*(i+i)                       //T to F
+(F+i)*(i+i)->(i+i)*(i+i)                       //F to i (this 'i' is an x)
+
+Derivation Complete.
+Parse tree is attached in the file named: "Derivation Tree, Q3.jpg"
+
+Prase and parse tree verified through http://jsmachines.sourceforge.net/machines/slr.html
+
+
+
+
+
+(I didn't do the Extra question.)
+Extra:
+=====
+
+When generating or parsing assembly language, all control logic is implemented
+as jump statements - for example:
+
+do {loop body} while(x);
+
+is implemented as:
+
+label z
+  {loop body}
+  if( x ) jmp z
+
+same applies to if-else, switch or case statements.
+
+Can labels be described in a context-free grammar? Why, or why not?
+If your answer is NO, how would we deal with labels?

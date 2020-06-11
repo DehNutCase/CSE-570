@@ -1,0 +1,113 @@
+Script started on Wed 10 Jun 2020 04:58:32 PM PDT
+pyt]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Final[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Final[00m$ python3[K[K[K[K[K[K[Kpython3 lab3.py
+For file = "f1":
+Printing Productions:
+E:
+(FL)
+
+F:
+*
++
+-
+d
+
+I:
+E
+n
+
+L:
+I
+LI
+
+S:
+E
+
+Printing kernels of the canonical states of the grammar:
+
+Format of a state is: [{dictionary of non_terminals: dictionary of productions}, symbol}]
+i.e. a state of the form [{'S': {'.A': true}}, '('] has the production S -> .A, and is reached
+by calling goto(I, '(')
+Note that the added state "S'" isn't produced by goto, hence it doesn't have a symbol
+
+State # 0  is
+[{"S'": {".S": true}}, "S'"]
+State # 1  is
+[{"E": {"(.FL)": true}}, "("]
+State # 2  is
+[{"S'": {"S.": true}}, "S"]
+State # 3  is
+[{"S": {"E.": true}}, "E"]
+State # 4  is
+[{"F": {"*.": true}}, "*"]
+State # 5  is
+[{"F": {"d.": true}}, "d"]
+State # 6  is
+[{"F": {"+.": true}}, "+"]
+State # 7  is
+[{"E": {"(F.L)": true}}, "F"]
+State # 8  is
+[{"F": {"-.": true}}, "-"]
+State # 9  is
+[{"I": {"n.": true}}, "n"]
+State # 10  is
+[{"L": {"I.": true}}, "I"]
+State # 11  is
+[{"L": {"L.I": true}, "E": {"(FL.)": true}}, "L"]
+State # 12  is
+[{"I": {"E.": true}}, "E"]
+State # 13  is
+[{"L": {"LI.": true}}, "I"]
+State # 14  is
+[{"E": {"(FL).": true}}, ")"]
+
+Printing the canonical states of the grammar:
+Obtained by calling closure(I) on the kernel of a state
+State # 0  is
+Obtained by goto(I,  S' )
+{"S'": {'.S': True}, 'S': {'.E': True}, 'E': {'.(FL)': True}}
+State # 1  is
+Obtained by goto(I,  ( )
+{'F': {'.+': True, '.d': True, '.*': True, '.-': True}, 'E': {'(.FL)': True}}
+State # 2  is
+Obtained by goto(I,  S )
+{"S'": {'S.': True}}
+State # 3  is
+Obtained by goto(I,  E )
+{'S': {'E.': True}}
+State # 4  is
+Obtained by goto(I,  * )
+{'F': {'*.': True}}
+State # 5  is
+Obtained by goto(I,  d )
+{'F': {'d.': True}}
+State # 6  is
+Obtained by goto(I,  + )
+{'F': {'+.': True}}
+State # 7  is
+Obtained by goto(I,  F )
+{'L': {'.LI': True, '.I': True}, 'I': {'.E': True, '.n': True}, 'E': {'.(FL)': True, '(F.L)': True}}
+State # 8  is
+Obtained by goto(I,  - )
+{'F': {'-.': True}}
+State # 9  is
+Obtained by goto(I,  n )
+{'I': {'n.': True}}
+State # 10  is
+Obtained by goto(I,  I )
+{'L': {'I.': True}}
+State # 11  is
+Obtained by goto(I,  L )
+{'L': {'L.I': True}, 'I': {'.E': True, '.n': True}, 'E': {'.(FL)': True, '(FL.)': True}}
+State # 12  is
+Obtained by goto(I,  E )
+{'I': {'E.': True}}
+State # 13  is
+Obtained by goto(I,  I )
+{'L': {'LI.': True}}
+State # 14  is
+Obtained by goto(I,  ) )
+{'E': {'(FL).': True}}
+
+]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Final[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Final[00m$ exit
+
+Script done on Wed 10 Jun 2020 04:58:39 PM PDT

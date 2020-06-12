@@ -205,8 +205,135 @@ S->.E       (from 'S': {'.E': True})
 E->.(FL)    (from 'E': {'.(FL)': True})
 
 
+Revision: I forgot to do the second part of this problem, whether the grammar is LR(0) and if it's SLR.
+The grammar appears to be both LR(0) and SLR.
+
+I'll rewrite the states to be more succinct so it's easier to find conflicts in LR(0):
+0: S'-> .S, S-> .E, E->.(FL)
+1: F->.+, F->.d, F->.*, F->.-, E->(.FL)
+2: S'->S.
+3: S->E.
+4: F->*.
+5: F->d.
+6: F->+.
+7: L->.LI, L->.I, I->.E, I->.n, E->.(FL), F->(F.L)
+8: F->-.
+9: I->n.
+10: L->I.
+11: L->L.I, I->.E, I-.n, E->.(FL), E->(FL.)
+12: I->E.
+13: L->LI.
+14: E->(FL).
+
+As far as I can tell from reading the above, there are no conflicts.
+
+Additionally, I ran the lab5 program on the grammar to generate the parse table. (My lab 5
+program expects the parser to handle conflicts, so it leaves conflicts in the table.
+I'll find the conlicts manually.)
+
+Each state is a dictionary with symbols as keys, each state[key]'s value is the action to take at a certain key when given
+a certain symbol to process. e.x.
+State  0   {'S': [['goto', 3]], 'L': [], '(': [['shift', 2]], 'E': [['goto', 1]], 'I': [], 'F': []}
+Means that, in state 0, when you see an 'S' you goto state 3. When you see an '(' you shift by pushing state 2.
+
+Note that each value in the dictionary is a list of lists, if state had a conflict for a certain symbol the list would have more than one list inside, e.x.
+something like:
+State n {'Z': [['shift', 3], ['reduce', 4]]}, this state, n, would have a shift reduce conflict in that case.
+
+However, no state inside the ouput of my program has more than 1 action for a given state & symbol combination, therefore there are no conflicts.
+(Assuming I wrote my lab 5 program and the grammar correctly.)
+
+Below is the output of my lab 5 program:
+Printing states:
+Each state is of the form [[item, symbol] ,state_id]
+[[{"S'": {'.S': True}, 'S': {'.E': True}, 'E': {'.(FL)': True}}, "S'"], 0]
+[[{'S': {'E.': True}}, 'E'], 1]
+[[{'F': {'.-': True, '.d': True, '.*': True, '.+': True}, 'E': {'(.FL)': True}}, '('], 2]
+[[{"S'": {'S.': True}}, 'S'], 3]
+[[{'F': {'-.': True}}, '-'], 4]
+[[{'F': {'d.': True}}, 'd'], 5]
+[[{'F': {'*.': True}}, '*'], 6]
+[[{'F': {'+.': True}}, '+'], 7]
+[[{'L': {'.I': True, '.LI': True}, 'E': {'(F.L)': True, '.(FL)': True}, 'I': {'.E': True, '.n': True}}, 'F'], 8]
+[[{'I': {'E.': True}}, 'E'], 9]
+[[{'L': {'L.I': True}, 'E': {'(FL.)': True, '.(FL)': True}, 'I': {'.E': True, '.n': True}}, 'L'], 10]
+[[{'L': {'I.': True}}, 'I'], 11]
+[[{'I': {'n.': True}}, 'n'], 12]
+[[{'E': {'(FL).': True}}, ')'], 13]
+[[{'L': {'LI.': True}}, 'I'], 14]
+
+Printing parsing table:
+State  0   {'S': [['goto', 3]], 'L': [], '(': [['shift', 2]], 'E': [['goto', 1]], 'I': [], 'F': []}
+State  1   {'S': [], 'L': [], 'E': [], 'I': [], 'F': [], '$': [['reduce', 'S->E']]}
+State  2   {'S': [], 'L': [], 'd': [['shift', 5]], '*': [['shift', 6]], 'I': [], '+': [['shift', 7]], 'F': [['goto', 8]], '-': [['shift', 4]], 'E': []}
+State  3   {'S': [], 'L': [], 'E': [], 'I': [], 'F': [], '$': [['accept']]}
+State  4   {'S': [], 'L': [], '(': [['reduce', 'F->-']], 'E': [], 'I': [], 'F': [], 'n': [['reduce', 'F->-']]}
+State  5   {'S': [], 'L': [], '(': [['reduce', 'F->d']], 'E': [], 'I': [], 'F': [], 'n': [['reduce', 'F->d']]}
+State  6   {'S': [], 'L': [], '(': [['reduce', 'F->*']], 'E': [], 'I': [], 'F': [], 'n': [['reduce', 'F->*']]}
+State  7   {'S': [], 'L': [], '(': [['reduce', 'F->+']], 'E': [], 'I': [], 'F': [], 'n': [['reduce', 'F->+']]}
+State  8   {'S': [], 'L': [['goto', 10]], '(': [['shift', 2]], 'E': [['goto', 9]], 'I': [['goto', 11]], 'F': [], 'n': [['shift', 12]]}
+State  9   {'S': [], 'L': [], '(': [['reduce', 'I->E']], 'E': [], 'I': [], 'F': [], 'n': [['reduce', 'I->E']], ')': [['reduce', 'I->E']]}
+State  10   {'S': [], 'L': [], '(': [['shift', 2]], 'E': [['goto', 9]], 'I': [['goto', 14]], 'F': [], 'n': [['shift', 12]], ')': [['shift', 13]]}
+State  11   {'S': [], 'L': [], '(': [['reduce', 'L->I']], 'E': [], 'I': [], 'F': [], 'n': [['reduce', 'L->I']], ')': [['reduce', 'L->I']]}
+State  12   {'S': [], 'L': [], '(': [['reduce', 'I->n']], 'E': [], 'I': [], 'F': [], 'n': [['reduce', 'I->n']], ')': [['reduce', 'I->n']]}
+State  13   {'S': [], 'L': [], '(': [['reduce', 'E->(FL)']], 'E': [], 'I': [], 'F': [], '$': [['reduce', 'E->(FL)']], 'n': [['reduce', 'E->(FL)']], ')': [['reduce', 'E->(FL)']]}
+State  14   {'S': [], 'L': [], '(': [['reduce', 'L->LI']], 'E': [], 'I': [], 'F': [], 'n': [['reduce', 'L->LI']], ')': [['reduce', 'L->LI']]}
+
+
+Additionally, this is the output of me running the lab 5 program on a language which does
+have a conflict and thus isn't LR(0). (This isn't part of the final, just me
+verifying my lab 5 program works properly.)
+
+Grammar:
+=
+*
+i
+$
+S->L=R
+S->R
+L->*R
+L->i
+R->L
+$
+
+Printing states:
+Each state is of the form [[item, symbol] ,state_id]
+[[{"S'": {'.S': True}, 'L': {'.*R': True, '.i': True}, 'S': {'.R': True, '.L=R': True}, 'R': {'.L': True}}, "S'"], 0]
+[[{'S': {'R.': True}}, 'R'], 1]
+[[{'L': {'i.': True}}, 'i'], 2]
+[[{"S'": {'S.': True}}, 'S'], 3]
+[[{'L': {'.*R': True, '*.R': True, '.i': True}, 'R': {'.L': True}}, '*'], 4]
+[[{'S': {'L.=R': True}, 'R': {'L.': True}}, 'L'], 5]
+[[{'L': {'.*R': True, '.i': True}, 'S': {'L=.R': True}, 'R': {'.L': True}}, '='], 6]
+[[{'R': {'L.': True}}, 'L'], 7]
+[[{'L': {'*R.': True}}, 'R'], 8]
+[[{'S': {'L=R.': True}}, 'R'], 9]
+
+Printing parsing table:
+State  0   {'L': [['goto', 5]], 'S': [['goto', 3]], 'R': [['goto', 1]], '*': [['shift', 4]], 'i': [['shift', 2]]}
+State  1   {'L': [], '$': [['reduce', 'S->R']], 'S': [], 'R': []}
+State  2   {'=': [['reduce', 'L->i']], 'L': [], '$': [['reduce', 'L->i']], 'S': [], 'R': []}
+State  3   {'L': [], '$': [['accept']], 'S': [], 'R': []}
+State  4   {'L': [['goto', 7]], 'S': [], 'R': [['goto', 8]], '*': [['shift', 4]], 'i': [['shift', 2]]}
+State  5   {'=': [['shift', 6], ['reduce', 'R->L']], 'L': [], '$': [['reduce', 'R->L']], 'S': [], 'R': []}
+State  6   {'L': [['goto', 7]], 'S': [], 'R': [['goto', 9]], '*': [['shift', 4]], 'i': [['shift', 2]]}
+State  7   {'=': [['reduce', 'R->L']], 'L': [], '$': [['reduce', 'R->L']], 'S': [], 'R': []}
+State  8   {'=': [['reduce', 'L->*R']], 'L': [], '$': [['reduce', 'L->*R']], 'S': [], 'R': []}
+State  9   {'L': [], '$': [['reduce', 'S->L=R']], 'S': [], 'R': []}
+
+
+The important state is state 5:
+State  5   {'=': [['shift', 6], ['reduce', 'R->L']], 'L': [], '$': [['reduce', 'R->L']], 'S': [], 'R': []}
+
+As you can see, State 5 has 2 actions for "=", '=': [['shift', 6], ['reduce', 'R->L']],
+meaning it has both a shift, pushing state 6, and a reduce by R->L on seeing "=,"
+a shift reduce conflict.
+
+
 The script files of me running the lab2 and lab3 programs are attached as
 final1.txt and final2.txt
+
+Revision: the script file of me running the lab5 program is attached as final3.txt
 
 The output of applying the lab2 program to the grammar is:
 Printing Productions:

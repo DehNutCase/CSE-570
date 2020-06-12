@@ -1,0 +1,41 @@
+Script started on Fri 12 Jun 2020 04:39:52 AM PDT
+]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Final[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Final[00m$ python3 lab5.py
+For file = "g5":
+
+Printing states:
+Each state is of the form [[item, symbol] ,state_id]
+[[{'S': {'.E': True}, "S'": {'.S': True}, 'E': {'.(FL)': True}}, "S'"], 0]
+[[{"S'": {'S.': True}}, 'S'], 1]
+[[{'E': {'(.FL)': True}, 'F': {'.d': True, '.*': True, '.+': True, '.-': True}}, '('], 2]
+[[{'S': {'E.': True}}, 'E'], 3]
+[[{'F': {'*.': True}}, '*'], 4]
+[[{'F': {'+.': True}}, '+'], 5]
+[[{'F': {'-.': True}}, '-'], 6]
+[[{'I': {'.n': True, '.E': True}, 'E': {'.(FL)': True, '(F.L)': True}, 'L': {'.I': True, '.LI': True}}, 'F'], 7]
+[[{'F': {'d.': True}}, 'd'], 8]
+[[{'I': {'n.': True}}, 'n'], 9]
+[[{'I': {'E.': True}}, 'E'], 10]
+[[{'L': {'I.': True}}, 'I'], 11]
+[[{'I': {'.n': True, '.E': True}, 'E': {'(FL.)': True, '.(FL)': True}, 'L': {'L.I': True}}, 'L'], 12]
+[[{'L': {'LI.': True}}, 'I'], 13]
+[[{'E': {'(FL).': True}}, ')'], 14]
+
+Printing parsing table:
+State  0   {'I': [], 'E': [['goto', 3]], 'L': [], 'S': [['goto', 1]], 'F': [], '(': [['shift', 2]]}
+State  1   {'I': [], 'E': [], '$': [['accept']], 'S': [], 'F': [], 'L': []}
+State  2   {'d': [['shift', 8]], 'E': [], 'L': [], 'I': [], 'S': [], '+': [['shift', 5]], '-': [['shift', 6]], 'F': [['goto', 7]], '*': [['shift', 4]]}
+State  3   {'I': [], 'E': [], '$': [['reduce', 'S->E']], 'S': [], 'F': [], 'L': []}
+State  4   {'I': [], 'E': [], 'L': [], 'S': [], 'F': [], 'n': [['reduce', 'F->*']], '(': [['reduce', 'F->*']]}
+State  5   {'I': [], 'E': [], 'L': [], 'S': [], 'F': [], 'n': [['reduce', 'F->+']], '(': [['reduce', 'F->+']]}
+State  6   {'I': [], 'E': [], 'L': [], 'S': [], 'F': [], 'n': [['reduce', 'F->-']], '(': [['reduce', 'F->-']]}
+State  7   {'I': [['goto', 11]], 'E': [['goto', 10]], 'L': [['goto', 12]], 'S': [], 'F': [], 'n': [['shift', 9]], '(': [['shift', 2]]}
+State  8   {'I': [], 'E': [], 'L': [], 'S': [], 'F': [], 'n': [['reduce', 'F->d']], '(': [['reduce', 'F->d']]}
+State  9   {'I': [], ')': [['reduce', 'I->n']], 'E': [], 'L': [], 'S': [], 'F': [], 'n': [['reduce', 'I->n']], '(': [['reduce', 'I->n']]}
+State  10   {'I': [], ')': [['reduce', 'I->E']], 'E': [], 'L': [], 'S': [], 'F': [], 'n': [['reduce', 'I->E']], '(': [['reduce', 'I->E']]}
+State  11   {'I': [], ')': [['reduce', 'L->I']], 'E': [], 'L': [], 'S': [], 'F': [], 'n': [['reduce', 'L->I']], '(': [['reduce', 'L->I']]}
+State  12   {'I': [['goto', 13]], ')': [['shift', 14]], 'E': [['goto', 10]], 'L': [], 'S': [], 'F': [], 'n': [['shift', 9]], '(': [['shift', 2]]}
+State  13   {'I': [], ')': [['reduce', 'L->LI']], 'E': [], 'L': [], 'S': [], 'F': [], 'n': [['reduce', 'L->LI']], '(': [['reduce', 'L->LI']]}
+State  14   {'I': [], ')': [['reduce', 'E->(FL)']], 'E': [], '$': [['reduce', 'E->(FL)']], 'S': [], 'F': [], 'n': [['reduce', 'E->(FL)']], '(': [['reduce', 'E->(FL)']], 'L': []}
+]0;dehnutcase@Lenovo-PC: /mnt/c/Users/Ken/Desktop/CSE 570/Final[01;32mdehnutcase@Lenovo-PC[00m:[01;34m/mnt/c/Users/Ken/Desktop/CSE 570/Final[00m$ exit
+
+Script done on Fri 12 Jun 2020 04:39:56 AM PDT
